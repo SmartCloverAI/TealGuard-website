@@ -96,7 +96,7 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   const version = await request.get('/api/version');
   expect(version.status()).toBe(200);
   const versionBody = await version.json();
-  expect(versionBody.version).toBe('1.0.0');
+  expect(versionBody.version).toBe('1.0.1');
   expect(versionBody.revision).toMatch(/^[0-9a-f]{7,40}$/);
   expect(Number.isNaN(Date.parse(versionBody.builtAt))).toBe(false);
 
@@ -117,6 +117,13 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   });
   expect(aliasRoot.status()).toBe(308);
   expect(aliasRoot.headers().location).toBe('https://tealguard.eu/ro');
+
+  const canonicalHttp = await request.get('/en/platform?source=http', {
+    headers: { Host: 'tealguard.eu', 'X-Forwarded-Proto': 'http' },
+    maxRedirects: 0
+  });
+  expect(canonicalHttp.status()).toBe(308);
+  expect(canonicalHttp.headers().location).toBe('https://tealguard.eu/en/platform?source=http');
 
   const tunnelHealth = await request.get('/api/healthz', {
     headers: { Host: '5d6ceb989608.smartclover.ro' },
