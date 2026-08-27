@@ -97,7 +97,7 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   const version = await request.get('/api/version');
   expect(version.status()).toBe(200);
   const versionBody = await version.json();
-  expect(versionBody.version).toBe('1.0.2');
+  expect(versionBody.version).toBe('1.0.3');
   expect(versionBody.revision).toMatch(/^[0-9a-f]{7,40}$/);
   expect(Number.isNaN(Date.parse(versionBody.builtAt))).toBe(false);
 
@@ -162,6 +162,55 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
     maxRedirects: 0
   });
   expect(tunnelHealth.status()).toBe(200);
+});
+
+test('unknown routes use a server-rendered styled English 404', async ({ page, request, browser }) => {
+  const unknownPaths = [
+    '/not-a-public-route',
+    '/en/not-a-public-route',
+    '/ro/not-a-public-route',
+    '/apiary',
+    '/api-docs',
+    '/api2',
+    '/favicon.ico-help'
+  ];
+
+  for (const path of unknownPaths) {
+    const response = await page.goto(path);
+    expect(response?.status(), path).toBe(404);
+    expect(page.url(), path).toContain(path);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page.locator('.not-found')).toBeVisible();
+    await expect(page.getByRole('banner').getByRole('link', { name: 'TealGuard home' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Return to TealGuard' })).toHaveAttribute('href', '/en');
+
+    const visualState = await page.locator('.not-found').evaluate((element) => ({
+      background: getComputedStyle(element).backgroundColor,
+      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth
+    }));
+    expect(visualState.background).toBe('rgb(6, 26, 26)');
+    expect(visualState.overflow).toBe(0);
+
+    const rawResponse = await request.get(path);
+    expect(rawResponse.status(), path).toBe(404);
+    expect(rawResponse.headers()['content-language'], path).toBe('en');
+    const rawHtml = await rawResponse.text();
+    expect(rawHtml, path).toContain('<html lang="en">');
+    expect(rawHtml, path).toContain('<h1>Page not found</h1>');
+    expect(rawHtml, path).toContain('>Return to TealGuard</a>');
+  }
+
+  const noScriptContext = await browser.newContext({ javaScriptEnabled: false });
+  const noScriptPage = await noScriptContext.newPage();
+  for (const path of unknownPaths) {
+    const response = await noScriptPage.goto(path);
+    expect(response?.status(), path).toBe(404);
+    await expect(noScriptPage.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(noScriptPage.getByRole('heading', { level: 1, name: 'Page not found' })).toBeVisible();
+    await expect(noScriptPage.getByRole('link', { name: 'Return to TealGuard' })).toBeVisible();
+  }
+  await noScriptContext.close();
 });
 
 test('core project content survives without JavaScript', async ({ browser }) => {

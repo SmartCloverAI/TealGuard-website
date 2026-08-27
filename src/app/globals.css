@@ -1728,24 +1728,6 @@ h3 {
   color: #5a6c6f;
 }
 
-.not-found {
-  min-height: 100vh;
-  display: grid;
-  place-content: center;
-  justify-items: start;
-  padding: 40px;
-  background: var(--night);
-  color: #ffffff;
-}
-
-.not-found p {
-  color: #5fd8cd;
-}
-
-.not-found h1 {
-  font-size: 48px;
-}
-
 @media (max-width: 1120px) {
   .funding-bar__inner > p {
     max-width: 390px;
