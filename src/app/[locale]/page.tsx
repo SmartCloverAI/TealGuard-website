@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { HomePage } from '@/components/HomePage';
-import { isLocale, type Locale } from '@/lib/site';
+import { defaultLocale, isLocale, type Locale } from '@/lib/site';
 
 export const revalidate = 3600;
 
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     alternates: {
       canonical: `/${locale}`,
-      languages: { ro: '/ro', en: '/en', 'x-default': '/ro' }
+      languages: { ro: '/ro', en: '/en', 'x-default': `/${defaultLocale}` }
     }
   };
 }

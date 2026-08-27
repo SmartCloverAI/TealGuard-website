@@ -77,6 +77,7 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   const pageResponse = await page.goto('/en/platform');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://tealguard.eu/en/platform');
   await expect(page.locator('link[rel="alternate"][hreflang="ro"]')).toHaveAttribute('href', 'https://tealguard.eu/ro/platform');
+  await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute('href', 'https://tealguard.eu/en/platform');
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://tealguard.eu/images/social/tealguard-announcement.png');
   await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute('content', 'TealGuard');
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
@@ -96,7 +97,7 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   const version = await request.get('/api/version');
   expect(version.status()).toBe(200);
   const versionBody = await version.json();
-  expect(versionBody.version).toBe('1.0.1');
+  expect(versionBody.version).toBe('1.0.2');
   expect(versionBody.revision).toMatch(/^[0-9a-f]{7,40}$/);
   expect(Number.isNaN(Date.parse(versionBody.builtAt))).toBe(false);
 
@@ -111,12 +112,23 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   expect(alias.status()).toBe(308);
   expect(alias.headers().location).toBe('https://tealguard.eu/en/platform?source=test');
 
-  const aliasRoot = await request.get('/', {
-    headers: { Host: '5d6ceb989608.smartclover.ro' },
-    maxRedirects: 0
-  });
-  expect(aliasRoot.status()).toBe(308);
-  expect(aliasRoot.headers().location).toBe('https://tealguard.eu/ro');
+  for (const host of [
+    'teal-guard.eu',
+    'www.tealguard.eu',
+    'www.teal-guard.eu',
+    '5d6ceb989608.smartclover.ro'
+  ]) {
+    const aliasRoot = await request.get('/?source=alias', {
+      headers: { Host: host },
+      maxRedirects: 0
+    });
+    expect(aliasRoot.status(), host).toBe(308);
+    expect(aliasRoot.headers().location, host).toBe('https://tealguard.eu/en?source=alias');
+  }
+
+  const defaultRoot = await request.get('/?source=default', { maxRedirects: 0 });
+  expect(defaultRoot.status()).toBe(307);
+  expect(defaultRoot.headers().location).toBe('/en?source=default');
 
   const canonicalHttp = await request.get('/en/platform?source=http', {
     headers: { Host: 'tealguard.eu', 'X-Forwarded-Proto': 'http' },
@@ -124,6 +136,26 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   });
   expect(canonicalHttp.status()).toBe(308);
   expect(canonicalHttp.headers().location).toBe('https://tealguard.eu/en/platform?source=http');
+
+  const canonicalHttpRoot = await request.get('/?source=http-root', {
+    headers: { Host: 'tealguard.eu', 'X-Forwarded-Proto': 'http' },
+    maxRedirects: 0
+  });
+  expect(canonicalHttpRoot.status()).toBe(308);
+  expect(canonicalHttpRoot.headers().location).toBe('https://tealguard.eu/en?source=http-root');
+
+  const manifest = await request.get('/manifest.webmanifest');
+  expect(manifest.status()).toBe(200);
+  const manifestBody = await manifest.json();
+  expect(manifestBody.id).toBe('/');
+  expect(manifestBody.lang).toBe('en');
+  expect(manifestBody.start_url).toBe('/en');
+
+  const sitemap = await request.get('/sitemap.xml');
+  expect(sitemap.status()).toBe(200);
+  const sitemapBody = await sitemap.text();
+  expect(sitemapBody).toContain('hreflang="x-default" href="https://tealguard.eu/en"');
+  expect(sitemapBody).toContain('hreflang="x-default" href="https://tealguard.eu/en/platform"');
 
   const tunnelHealth = await request.get('/api/healthz', {
     headers: { Host: '5d6ceb989608.smartclover.ro' },

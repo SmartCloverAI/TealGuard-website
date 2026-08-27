@@ -22,7 +22,7 @@ export const siteConfig = {
 export const locales = ['ro', 'en'] as const;
 export type Locale = (typeof locales)[number];
 
-export const defaultLocale: Locale = 'ro';
+export const defaultLocale: Locale = 'en';
 
 export const sectionSlugs = [
   'project',

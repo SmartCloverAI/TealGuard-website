@@ -9,7 +9,7 @@ import type { ReactNode } from 'react';
 import { Footer } from '@/components/Footer';
 import { FundingBar } from '@/components/FundingBar';
 import { Header } from '@/components/Header';
-import { isLocale, locales, siteConfig, type Locale } from '@/lib/site';
+import { defaultLocale, isLocale, locales, siteConfig, type Locale } from '@/lib/site';
 
 type Props = {
   children: ReactNode;
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Omit<Props, 'children'>): Pro
       : 'TealGuard is a research and clinical-validation project for a sovereign AI platform supporting gynecologic oncology pathways.',
     alternates: {
       canonical: `/${locale}`,
-      languages: { ro: '/ro', en: '/en', 'x-default': '/ro' }
+      languages: { ro: '/ro', en: '/en', 'x-default': `/${defaultLocale}` }
     },
     openGraph: {
       type: 'website',

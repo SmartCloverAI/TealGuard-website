@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { SectionPage } from '@/components/SectionPage';
 import { sectionCopy, text } from '@/content/project';
 import {
+  defaultLocale,
   isLocale,
   isSectionSlug,
   locales,
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     description: text(copy.introduction, locale),
     alternates: {
       canonical: `/${locale}/${section}`,
-      languages: { ro: `/ro/${section}`, en: `/en/${section}`, 'x-default': `/ro/${section}` }
+      languages: { ro: `/ro/${section}`, en: `/en/${section}`, 'x-default': `/${defaultLocale}/${section}` }
     },
     openGraph: {
       type: 'website',

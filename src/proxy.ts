@@ -1,8 +1,11 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-const canonicalOrigin = 'https://tealguard.eu';
-const canonicalHost = 'tealguard.eu';
+import { defaultLocale, siteConfig } from '@/lib/site';
+
+const canonicalOrigin = siteConfig.canonicalOrigin;
+const canonicalHost = new URL(canonicalOrigin).hostname;
+const defaultLocalePath = `/${defaultLocale}`;
 const aliasHosts = new Set([
   'teal-guard.eu',
   'www.tealguard.eu',
@@ -15,7 +18,7 @@ export function proxy(request: NextRequest) {
   const host = (forwardedHost || request.headers.get('host') || '').split(':')[0].toLowerCase();
   const forwardedProto = request.headers.get('x-forwarded-proto')?.split(',')[0].trim().toLowerCase();
   const protocol = forwardedProto || request.nextUrl.protocol.replace(':', '').toLowerCase();
-  const path = request.nextUrl.pathname === '/' ? '/ro' : request.nextUrl.pathname;
+  const path = request.nextUrl.pathname === '/' ? defaultLocalePath : request.nextUrl.pathname;
 
   if (aliasHosts.has(host) || (host === canonicalHost && protocol !== 'https')) {
     const destination = new URL(`${path}${request.nextUrl.search}`, canonicalOrigin);
@@ -23,7 +26,7 @@ export function proxy(request: NextRequest) {
   }
 
   if (request.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/ro', request.url), 307);
+    return NextResponse.redirect(new URL(`${defaultLocalePath}${request.nextUrl.search}`, request.url), 307);
   }
 
   return NextResponse.next();

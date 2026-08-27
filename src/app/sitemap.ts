@@ -1,9 +1,10 @@
 import type { MetadataRoute } from 'next';
 
-import { locales, sectionSlugs, siteConfig } from '@/lib/site';
+import { defaultLocale, locales, sectionSlugs, siteConfig } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date('2026-08-27T00:00:00+03:00');
+  const defaultUrl = `${siteConfig.canonicalOrigin}/${defaultLocale}`;
 
   return locales.flatMap((locale) => [
     {
@@ -11,7 +12,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: 'weekly' as const,
       priority: 1,
-      alternates: { languages: { ro: `${siteConfig.canonicalOrigin}/ro`, en: `${siteConfig.canonicalOrigin}/en` } }
+      alternates: {
+        languages: {
+          ro: `${siteConfig.canonicalOrigin}/ro`,
+          en: `${siteConfig.canonicalOrigin}/en`,
+          'x-default': defaultUrl
+        }
+      }
     },
     ...sectionSlugs.map((section) => ({
       url: `${siteConfig.canonicalOrigin}/${locale}/${section}`,
@@ -21,7 +28,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: {
         languages: {
           ro: `${siteConfig.canonicalOrigin}/ro/${section}`,
-          en: `${siteConfig.canonicalOrigin}/en/${section}`
+          en: `${siteConfig.canonicalOrigin}/en/${section}`,
+          'x-default': `${defaultUrl}/${section}`
         }
       }
     }))
