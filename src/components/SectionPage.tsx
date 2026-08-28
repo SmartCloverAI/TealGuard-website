@@ -18,6 +18,8 @@ import {
 } from '@/content/project';
 import { siteConfig, type Locale, type SectionSlug } from '@/lib/site';
 
+import { BaselineEvidence } from './BaselineEvidence';
+
 function FactList({ facts, locale }: { facts: typeof projectFacts; locale: Locale }) {
   return (
     <dl className="fact-list">
@@ -192,7 +194,11 @@ function SectionBody({ slug, locale }: { slug: SectionSlug; locale: Locale }) {
         <>
           <div className="target-warning">
             <strong>{ro ? 'Obiective, nu rezultate curente' : 'Targets, not current results'}</strong>
-            <p>{ro ? 'TealGuard pornește de la prototipul CerviGuard existent la TRL 6. Sistemul integrat la TRL 7, validarea prospectivă la TRL 8 și operarea la TRL 9 rămân obiective ale programului.' : 'TealGuard starts from the existing CerviGuard TRL 6 prototype. Integrated TRL 7, prospective TRL 8 validation and TRL 9 operation remain programme targets.'}</p>
+            <p>{ro ? 'Documentul din dosarul proiectului „TRL6_CerviGuard.docx”, datat 13 ianuarie 2026, consemnează CerviGuard la TRL 6 drept punct de plecare. Codul și capturile publice confirmă existența aplicației, dar nu validează independent demonstrarea într-un mediu relevant sau performanța clinică. Integrarea la TRL 7, validarea prospectivă la TRL 8 și operarea la TRL 9 rămân obiective ale programului.' : 'The project-dossier document “TRL6_CerviGuard.docx”, dated 13 January 2026, records CerviGuard at TRL 6 as the starting point. Public code and captures confirm that the application exists, but do not independently validate demonstration in a relevant environment or clinical performance. TRL 7 integration, TRL 8 prospective validation and TRL 9 operation remain programme targets.'}</p>
+            <Link className="text-link target-warning__link" href={`/${locale}/baseline`}>
+              {ro ? 'Consultați dovezile tehnologice și limitele lor' : 'Review the technology evidence and its limits'}
+              <ArrowRight aria-hidden="true" size={16} />
+            </Link>
           </div>
           <Targets locale={locale} />
           <EvidenceFigure
@@ -205,6 +211,8 @@ function SectionBody({ slug, locale }: { slug: SectionSlug; locale: Locale }) {
           />
         </>
       );
+    case 'baseline':
+      return <BaselineEvidence locale={locale} />;
     case 'progress':
       return (
         <div className="timeline">

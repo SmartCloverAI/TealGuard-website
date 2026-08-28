@@ -7,7 +7,13 @@ import { createNotFoundResponse } from '@/lib/not-found-response';
 const canonicalOrigin = siteConfig.canonicalOrigin;
 const canonicalHost = new URL(canonicalOrigin).hostname;
 const defaultLocalePath = `/${defaultLocale}`;
-const publicRuntimePaths = new Set(['/icon', '/manifest.webmanifest', '/robots.txt', '/sitemap.xml']);
+const publicRuntimePaths = new Set([
+  '/icon',
+  '/manifest.webmanifest',
+  '/robots.txt',
+  '/sitemap.xml',
+  '/evidence/cerviguard-baseline-manifest_v1.json'
+]);
 const aliasHosts = new Set([
   'teal-guard.eu',
   'www.tealguard.eu',

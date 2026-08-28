@@ -2,12 +2,12 @@ import { ChevronDown, Mail, Menu } from 'lucide-react';
 import Link from 'next/link';
 
 import { commonCopy, navigation, text } from '@/content/project';
-import { alternateLocale, type Locale } from '@/lib/site';
+import type { Locale } from '@/lib/site';
 
 import { Brand } from './Brand';
+import { LocaleSwitch } from './LocaleSwitch';
 
 export function Header({ locale }: { locale: Locale }) {
-  const otherLocale = alternateLocale(locale);
   const primary = navigation.filter((item) => item.group === 'primary');
   const evidence = navigation.filter((item) => item.group === 'evidence');
 
@@ -36,14 +36,7 @@ export function Header({ locale }: { locale: Locale }) {
           </details>
         </nav>
         <div className="header-actions">
-          <div className="locale-switch" aria-label={locale === 'ro' ? 'Alege limba' : 'Choose language'}>
-            <Link aria-current={locale === 'ro' ? 'page' : undefined} href="/ro">
-              RO
-            </Link>
-            <Link aria-current={locale === 'en' ? 'page' : undefined} href="/en">
-              EN
-            </Link>
-          </div>
+          <LocaleSwitch locale={locale} />
           <Link className="icon-link" href={`/${locale}/contact`} title={text(navigation.find((item) => item.slug === 'contact')!.label, locale)}>
             <Mail aria-hidden="true" size={18} />
             <span className="sr-only">{text(navigation.find((item) => item.slug === 'contact')!.label, locale)}</span>
@@ -60,7 +53,6 @@ export function Header({ locale }: { locale: Locale }) {
                 </Link>
               ))}
               <Link href={`/${locale}/contact`}>{text(navigation.find((item) => item.slug === 'contact')!.label, locale)}</Link>
-              <Link href={`/${otherLocale}`}>{otherLocale.toUpperCase()}</Link>
             </nav>
           </details>
         </div>

@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 import { defaultLocale, locales, sectionSlugs, siteConfig } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date('2026-08-27T00:00:00+03:00');
+  const lastModified = new Date('2026-08-28T00:00:00+03:00');
   const defaultUrl = `${siteConfig.canonicalOrigin}/${defaultLocale}`;
 
   return locales.flatMap((locale) => [
@@ -24,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteConfig.canonicalOrigin}/${locale}/${section}`,
       lastModified,
       changeFrequency: section === 'progress' || section === 'news' || section === 'outputs' ? 'weekly' as const : 'monthly' as const,
-      priority: section === 'project' || section === 'platform' || section === 'validation' ? 0.8 : 0.6,
+      priority: section === 'project' || section === 'platform' || section === 'validation' || section === 'baseline' ? 0.8 : 0.6,
       alternates: {
         languages: {
           ro: `${siteConfig.canonicalOrigin}/ro/${section}`,

@@ -2,6 +2,7 @@ import { ArrowRight, CircleCheck, Clock3, ExternalLink, ShieldCheck } from 'luci
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { baselineCaptures, baselineText, cerviGuardRelease } from '@/content/baseline';
 import {
   commonCopy,
   homeCopy,
@@ -26,7 +27,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         boundaries: 'Dezvoltare cu responsabilități clare',
         boundariesBody: 'Fiecare modul planificat sprijină o parte definită a fluxului. Deciziile clinice rămân la profesioniști calificați, iar afirmațiile de performanță vor urma validării.',
         validation: 'Obiective de validare',
-        validationBody: 'Programul urmărește maturizarea de la TRL 6 la TRL 9 prin integrare, validare prospectivă și operare la nivel de producție.',
+        validationBody: 'De la punctul de plecare documentat la validare clinică și operare la nivel de producție.',
         targetsNote: 'Toate cifrele de mai jos sunt obiective contractuale, nu rezultate curente.',
         announcement: 'Anunț de proiect',
         announcementTitle: 'Contractul de finanțare TealGuard a fost semnat',
@@ -46,7 +47,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         boundaries: 'Development with clear responsibilities',
         boundariesBody: 'Each planned module supports a defined part of the pathway. Clinical decisions remain with qualified professionals, and performance claims will follow validation.',
         validation: 'Validation targets',
-        validationBody: 'The programme targets progress from TRL 6 to TRL 9 through integration, prospective validation and production-level operation.',
+        validationBody: 'From the documented starting point to clinical validation and production-level operation.',
         targetsNote: 'Every figure below is a contractual target, not a current result.',
         announcement: 'Project announcement',
         announcementTitle: 'The TealGuard financing contract has been signed',
@@ -76,6 +77,10 @@ export function HomePage({ locale }: { locale: Locale }) {
               </Link>
             </div>
             <p className="consortium-line">{text(homeCopy.consortium, locale)}</p>
+            <Link className="hero-evidence-link" href={`/${locale}/baseline`}>
+              {locale === 'ro' ? 'Consultați dovezile CerviGuard' : 'Inspect the CerviGuard evidence'}
+              <ArrowRight aria-hidden="true" size={15} />
+            </Link>
           </div>
           <HeroScene locale={locale} />
         </div>
@@ -85,6 +90,10 @@ export function HomePage({ locale }: { locale: Locale }) {
         <div className="shell">
           <p>{text(homeCopy.introduction, locale)}</p>
           <p>{text(homeCopy.consortium, locale)}</p>
+          <Link className="mobile-hero-context__evidence" href={`/${locale}/baseline`}>
+            {locale === 'ro' ? 'Consultați dovezile CerviGuard' : 'Inspect the CerviGuard evidence'}
+            <ArrowRight aria-hidden="true" size={14} />
+          </Link>
         </div>
       </section>
 
@@ -104,6 +113,43 @@ export function HomePage({ locale }: { locale: Locale }) {
           </div>
           <Link className="text-link" href={`/${locale}/progress`}>
             {text(commonCopy.viewProgress, locale)} <ArrowRight aria-hidden="true" size={16} />
+          </Link>
+        </div>
+      </section>
+
+      <section className="baseline-proof" aria-labelledby="baseline-proof-heading">
+        <div className="shell baseline-proof__grid">
+          <div className="baseline-proof__copy">
+            <p className="eyebrow">{locale === 'ro' ? 'Dovezi tehnologice' : 'Technology evidence'}</p>
+            <h2 id="baseline-proof-heading">
+              {locale === 'ro' ? 'TealGuard se bazează pe CerviGuard' : 'TealGuard builds on CerviGuard'}
+            </h2>
+            <p>
+              {locale === 'ro'
+                ? 'O revizie publică CerviGuard din mai 2026 confirmă că aplicația și fluxul de bază precedă proiectul. Versiunea actuală v0.4.11 adaugă controale mai stricte de acces la cazuri și teste focalizate. Capturile datate folosesc exclusiv date sintetice.'
+                : 'A public CerviGuard revision from May 2026 confirms that the application and core workflow predate the project. The current v0.4.11 release adds stronger case-access controls and focused tests. The dated captures use synthetic data only.'}
+            </p>
+            <div className="baseline-proof__meta">
+              <span>CerviGuard v{cerviGuardRelease.version}</span>
+              <span>{locale === 'ro' ? 'Cod anterior proiectului' : 'Pre-project source'}</span>
+              <span>{locale === 'ro' ? 'Versiune actuală consolidată' : 'Current hardened release'}</span>
+              <span>{locale === 'ro' ? 'Capturi sintetice' : 'Synthetic captures'}</span>
+            </div>
+            <Link className="button button--dark baseline-proof__action" href={`/${locale}/baseline`}>
+              {locale === 'ro' ? 'Consultați dovezile tehnologice' : 'Review the technology evidence'}
+              <ArrowRight aria-hidden="true" size={16} />
+            </Link>
+          </div>
+          <Link className="baseline-proof__media" href={`/${locale}/baseline`} aria-label={locale === 'ro' ? 'Consultați captura și dovezile CerviGuard' : 'Review the CerviGuard capture and evidence'}>
+            <Image
+              src={baselineCaptures[0].src}
+              alt={baselineText(baselineCaptures[0].alt, locale)}
+              width={baselineCaptures[0].width}
+              height={baselineCaptures[0].height}
+              sizes="(max-width: 800px) 100vw, 42vw"
+              unoptimized
+            />
+            <span>{locale === 'ro' ? 'Captură sintetică · 28 august 2026' : 'Synthetic capture · 28 August 2026'}</span>
           </Link>
         </div>
       </section>

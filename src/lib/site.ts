@@ -28,6 +28,7 @@ export const sectionSlugs = [
   'project',
   'platform',
   'validation',
+  'baseline',
   'progress',
   'outputs',
   'news',

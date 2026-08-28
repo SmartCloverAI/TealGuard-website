@@ -50,6 +50,7 @@ export const navigation: Array<{ slug: SectionSlug; label: LocalizedText; group:
   { slug: 'validation', label: localized('Validation', 'Validare'), group: 'primary' },
   { slug: 'progress', label: localized('Progress', 'Progres'), group: 'primary' },
   { slug: 'news', label: localized('News', 'Noutăți'), group: 'primary' },
+  { slug: 'baseline', label: localized('Technology evidence', 'Dovezi tehnologice'), group: 'evidence' },
   { slug: 'outputs', label: localized('Outputs', 'Rezultate'), group: 'evidence' },
   { slug: 'consortium', label: localized('Consortium', 'Consorțiu'), group: 'evidence' },
   { slug: 'funding', label: localized('Funding', 'Finanțare'), group: 'evidence' },
@@ -68,7 +69,7 @@ export const commonCopy = {
   viewProgress: localized('View progress', 'Vedeți progresul'),
   readUpdate: localized('Read the announcement', 'Citiți anunțul'),
   openFigure: localized('Open full-size figure', 'Deschideți figura la dimensiune completă'),
-  lastUpdated: localized('Information current as of 27 August 2026', 'Informații actualizate la 27 august 2026'),
+  lastUpdated: localized('Information current as of 28 August 2026', 'Informații actualizate la 28 august 2026'),
   developmentNotice: localized(
     'TealGuard is in research, development and validation. It is not a certified medical device and does not replace professional medical advice, diagnosis, treatment or applicable clinical guidelines.',
     'TealGuard se află în cercetare, dezvoltare și validare. Nu este un dispozitiv medical certificat și nu înlocuiește sfatul medical, diagnosticul, tratamentul sau ghidurile clinice aplicabile.'
@@ -121,9 +122,9 @@ export const fundingFacts = [
 export const targets = z.array(targetSchema).parse([
   {
     id: 'maturity',
-    value: localized('TRL 6 → TRL 9', 'TRL 6 → TRL 9'),
-    label: localized('Technology maturity', 'Maturitate tehnologică'),
-    qualifier: localized('Integration, prospective validation and production-level operation are programme targets.', 'Integrarea, validarea prospectivă și operarea la nivel de producție sunt obiective ale programului.'),
+    value: localized('TRL 6 → target TRL 9', 'TRL 6 → obiectiv TRL 9'),
+    label: localized('Programme maturity pathway', 'Parcursul de maturitate al programului'),
+    qualifier: localized('“TRL6_CerviGuard.docx”, dated 13 January 2026, records the starting position; public artifacts do not independently validate it.', 'Documentul „TRL6_CerviGuard.docx”, datat 13 ianuarie 2026, consemnează poziția inițială; artefactele publice nu o validează independent.'),
     state: 'target'
   },
   {
@@ -205,6 +206,14 @@ export const sectionCopy: Record<SectionSlug, { eyebrow: LocalizedText; title: L
     eyebrow: statusLabels.target,
     title: localized('Validation before clinical claims', 'Validare înaintea afirmațiilor clinice'),
     introduction: localized('No clinical-performance or patient-outcome results are claimed today. Every validation figure below is a project target.', 'În prezent, proiectul nu revendică rezultate privind performanța clinică sau efectele asupra pacientelor. Fiecare cifră de validare de mai jos este un obiectiv al proiectului.')
+  },
+  baseline: {
+    eyebrow: localized('Technology evidence', 'Dovezi tehnologice'),
+    title: localized('CerviGuard evidence for TealGuard', 'Dovezi CerviGuard pentru TealGuard'),
+    introduction: localized(
+      'Inspect the CerviGuard application code available before TealGuard, the current hardened release, dated synthetic captures and the precise limits of this public evidence.',
+      'Consultați codul aplicației CerviGuard disponibil înaintea TealGuard, versiunea actuală consolidată, capturile sintetice datate și limitele precise ale acestor dovezi publice.'
+    )
   },
   progress: {
     eyebrow: localized('Implementation record', 'Evidența implementării'),

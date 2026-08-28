@@ -4,6 +4,7 @@ const sectionRoutes = [
   'project',
   'platform',
   'validation',
+  'baseline',
   'progress',
   'outputs',
   'news',
@@ -33,6 +34,18 @@ test('homepage exposes the project identity, status and progressive scene', asyn
     return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 0 && rect.height > 0;
   }))).toBe(true);
   await expect(page.locator('.hero-scene')).toHaveAttribute('data-scene-mode', /webgl|static/);
+  await expect(page.getByRole('link', { name: 'Inspect the CerviGuard evidence' })).toHaveAttribute('href', '/en/baseline');
+  await expect(page.getByRole('heading', { level: 2, name: 'TealGuard builds on CerviGuard' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Review the technology evidence' })).toHaveAttribute('href', '/en/baseline');
+  await expect(page.getByText('Pre-project source', { exact: true })).toBeVisible();
+  await expect(page.getByText('Current hardened release', { exact: true })).toBeVisible();
+  await expect(page.getByText('Synthetic captures', { exact: true })).toBeVisible();
+
+  const announcementArtwork = page.locator('.news-feature__media img');
+  await announcementArtwork.scrollIntoViewIfNeeded();
+  await expect(announcementArtwork).toHaveCSS('object-fit', 'contain');
+  const announcementBox = await announcementArtwork.boundingBox();
+  expect((announcementBox?.width ?? 0) / (announcementBox?.height ?? 1)).toBeCloseTo(1200 / 630, 1);
 
   if ((await page.locator('.hero-scene').getAttribute('data-scene-mode')) === 'webgl') {
     await expect(page.locator('.hero-scene')).toHaveAttribute('data-scene-ready', 'true', { timeout: 10_000 });
@@ -57,6 +70,45 @@ test('both locales and every public section return complete pages', async ({ pag
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), `${locale}/${section}`).toBe(true);
     }
   }
+});
+
+test('baseline routes expose bilingual, pinned and bounded evidence', async ({ page }) => {
+  for (const locale of ['en', 'ro'] as const) {
+    await page.goto(`/${locale}/baseline`);
+    await expect(page.locator('html')).toHaveAttribute('lang', locale);
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page.locator('.evidence-record')).toHaveCount(2);
+    await expect(page.locator('.evidence-record img')).toHaveCount(2);
+    await expect(page.locator('.evidence-quick-links a')).toHaveCount(4);
+    await expect(page.locator('.evidence-record img').first()).toHaveAttribute('alt', /synthetic|sintetic/i);
+    await expect(page.locator('code').filter({ hasText: '20a03dd2fd5a454f6f7cb3fe3b857f3199b96cef' })).toBeVisible();
+    await expect(page.locator('code').filter({ hasText: '8274b00929c5072438354502ee7ad454dd62a8da' })).toBeVisible();
+    await expect(page.getByText('TRL6_CerviGuard.docx')).toBeVisible();
+    await expect(page.getByText(locale === 'ro' ? 'Aceste dovezi publice nu stabilesc' : 'This public record does not establish')).toBeVisible();
+    await expect(page.getByText(/relevant environment|mediu relevant/i).last()).toBeVisible();
+    await expect(page.getByRole('link', { name: /machine-readable evidence manifest|manifestul de dovezi/i })).toHaveAttribute('href', '/evidence/cerviguard-baseline-manifest_v1.json');
+
+    const otherLocale = locale === 'en' ? 'Română' : 'English';
+    await expect(page.locator('.locale-switch').getByRole('link', { name: otherLocale })).toHaveAttribute(
+      'href',
+      `/${locale === 'en' ? 'ro' : 'en'}/baseline`
+    );
+  }
+});
+
+test('locale switch retains section, query and fragment', async ({ page }) => {
+  await page.goto('/en/baseline?source=review#evidence-boundary-heading');
+  const romanian = page.locator('.locale-switch').getByRole('link', { name: 'Română' });
+  await expect(romanian).toHaveAttribute('href', '/ro/baseline');
+  await romanian.click();
+  await expect(page).toHaveURL(/\/ro\/baseline\?source=review#evidence-boundary-heading$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ro');
+  await expect.poll(async () => {
+    const header = await page.locator('.site-header').boundingBox();
+    const target = await page.locator('#evidence-boundary-heading').boundingBox();
+    if (!header || !target) return false;
+    return target.y >= header.y + header.height + 8;
+  }).toBe(true);
 });
 
 test('images load and official funding marks remain visible', async ({ page }) => {
@@ -97,13 +149,21 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   const version = await request.get('/api/version');
   expect(version.status()).toBe(200);
   const versionBody = await version.json();
-  expect(versionBody.version).toBe('1.0.3');
+  expect(versionBody.version).toBe('1.0.4');
   expect(versionBody.revision).toMatch(/^[0-9a-f]{7,40}$/);
   expect(Number.isNaN(Date.parse(versionBody.builtAt))).toBe(false);
 
   const directAsset = await request.get('/images/funding/eu-cofunded-ro.png');
   expect(directAsset.status()).toBe(200);
   expect(directAsset.headers()['x-content-type-options']).toBe('nosniff');
+
+  const evidenceManifest = await request.get('/evidence/cerviguard-baseline-manifest_v1.json');
+  expect(evidenceManifest.status()).toBe(200);
+  expect(evidenceManifest.headers()['content-type']).toContain('application/json');
+  const evidenceManifestBody = await evidenceManifest.json();
+  expect(evidenceManifestBody.timeline.preProjectSource.revision).toBe('20a03dd2fd5a454f6f7cb3fe3b857f3199b96cef');
+  expect(evidenceManifestBody.timeline.currentRelease.revision).toBe('8274b00929c5072438354502ee7ad454dd62a8da');
+  expect(evidenceManifestBody.captureMethod.independentlyAttested).toBe(false);
 
   const alias = await request.get('/en/platform?source=test', {
     headers: { Host: 'teal-guard.eu' },
@@ -156,6 +216,8 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   const sitemapBody = await sitemap.text();
   expect(sitemapBody).toContain('hreflang="x-default" href="https://tealguard.eu/en"');
   expect(sitemapBody).toContain('hreflang="x-default" href="https://tealguard.eu/en/platform"');
+  expect(sitemapBody).toContain('hreflang="x-default" href="https://tealguard.eu/en/baseline"');
+  expect((sitemapBody.match(/<loc>/g) ?? []).length).toBe(28);
 
   const tunnelHealth = await request.get('/api/healthz', {
     headers: { Host: '5d6ceb989608.smartclover.ro' },
@@ -219,8 +281,38 @@ test('core project content survives without JavaScript', async ({ browser }) => 
   await page.goto('/en');
   await expect(page.getByRole('heading', { level: 1, name: 'TealGuard' })).toBeVisible();
   await expect(page.getByText('Four planned modules across one clinical pathway.')).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'TealGuard builds on CerviGuard' })).toBeVisible();
   await expect(page.locator('.scene-fallback')).toBeVisible();
+  await page.goto('/en/baseline');
+  await expect(page.getByRole('heading', { level: 1, name: 'CerviGuard evidence for TealGuard' })).toBeVisible();
+  await expect(page.locator('.evidence-record')).toHaveCount(2);
+  await expect(page.getByText('This public record does not establish')).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open the machine-readable evidence manifest/ })).toBeVisible();
   await context.close();
+});
+
+test('baseline evidence reflows without clipping or overlap', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'cross-viewport evidence check runs once');
+
+  for (const viewport of [
+    { width: 1440, height: 1000 },
+    { width: 1024, height: 768 },
+    { width: 768, height: 1024 },
+    { width: 390, height: 844 },
+    { width: 320, height: 568 }
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/en/baseline');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), `${viewport.width}px overflow`).toBe(true);
+    await expect(page.locator('.evidence-record')).toHaveCount(2);
+    for (const record of await page.locator('.evidence-record').all()) {
+      await record.scrollIntoViewIfNeeded();
+      await expect(record).toBeVisible();
+    }
+    const provenance = page.locator('.provenance-list').first();
+    await provenance.scrollIntoViewIfNeeded();
+    expect((await provenance.boundingBox())?.width, `${viewport.width}px provenance width`).toBeLessThanOrEqual(viewport.width);
+  }
 });
 
 test('reduced-motion mode keeps a readable static pathway', async ({ page }) => {

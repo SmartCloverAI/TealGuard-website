@@ -1,0 +1,102 @@
+{
+  "id": "cerviguard-technical-evidence-2026-08-28",
+  "version": 1,
+  "publishedBy": "SmartClover SRL",
+  "publishedOn": "2026-08-28",
+  "scope": "Dated public technical evidence for CerviGuard in relation to TealGuard. This record is not a reconstruction of the application state on 19 August 2026.",
+  "timeline": {
+    "tealGuardImplementationStart": "2026-08-19",
+    "preProjectSource": {
+      "revision": "20a03dd2fd5a454f6f7cb3fe3b857f3199b96cef",
+      "authoredAt": "2026-05-11T21:25:46+03:00",
+      "url": "https://github.com/SmartCloverAI/CerviGuard/tree/20a03dd2fd5a454f6f7cb3fe3b857f3199b96cef",
+      "supports": "Public CerviGuard application code and core workflow surfaces existed before TealGuard implementation began.",
+      "boundary": "This revision predates current owner/admin case-access controls and is not presented as security, clinical-performance or TRL evidence."
+    },
+    "currentRelease": {
+      "version": "0.4.11",
+      "revision": "8274b00929c5072438354502ee7ad454dd62a8da",
+      "authoredAt": "2026-08-28T14:19:55+03:00",
+      "url": "https://github.com/SmartCloverAI/CerviGuard/tree/8274b00929c5072438354502ee7ad454dd62a8da",
+      "supports": "Current workflow source, owner/admin case-access controls, focused access-control tests and explicit synthetic-demo boundaries.",
+      "boundary": "This post-start revision must not be treated as the application state at TealGuard implementation start or as an independent production-security assessment."
+    }
+  },
+  "liveObservation": {
+    "url": "https://cerviguard.link/login",
+    "observedVersion": "0.4.11",
+    "observedAt": "2026-08-28T11:22:11Z",
+    "mutable": true,
+    "note": "The public URL is a dated availability observation, not a cryptographic deployment-to-source link."
+  },
+  "captureMethod": {
+    "producer": "SmartClover SRL",
+    "independentlyAttested": false,
+    "sourceRevision": "8274b00929c5072438354502ee7ad454dd62a8da",
+    "build": "npm run build; production server started with USE_RATIO1_MOCK=true and NEXT_PUBLIC_EVIDENCE_DEMO_MODE=true",
+    "runtime": "Node.js 24.15.0",
+    "captureTool": "Playwright 1.62.1",
+    "browser": "Chromium 151.0.7922.34",
+    "fixture": "Synthetic mock account and synthetic case record; no patient image or patient data.",
+    "procedure": "Authenticate to the isolated mock build, open the case-intake and synthetic case-review routes, and save full-page PNG captures at the stated viewport widths.",
+    "review": "Publisher visual review for synthetic-data labelling, absence of patient imagery and visible non-clinical-use boundaries; files then frozen by SHA-256. No independent attestation is claimed.",
+    "captureLimit": "The viewport heights used for these full-page captures were not retained. Viewport widths and final output dimensions are recorded below."
+  },
+  "captures": [
+    {
+      "id": "structured-intake",
+      "path": "/images/evidence/cerviguard/2026-08-28/cerviguard-structured-intake-demo_v1.png",
+      "capturedAt": "2026-08-28T11:14:17.748Z",
+      "viewportWidth": 1440,
+      "fullPage": true,
+      "output": {
+        "width": 1440,
+        "height": 960,
+        "sha256": "bc54263ff8847227e30feff84f6c2368ce711a8ed32e5062a5920b9c202a5d09"
+      },
+      "data": "Synthetic; not for clinical use.",
+      "supports": "Implemented authenticated case-intake interface and visible upload boundaries."
+    },
+    {
+      "id": "clinician-review",
+      "path": "/images/evidence/cerviguard/2026-08-28/cerviguard-clinician-review-demo_v1.png",
+      "capturedAt": "2026-08-28T11:14:18.505Z",
+      "viewportWidth": 1200,
+      "fullPage": true,
+      "output": {
+        "width": 1200,
+        "height": 1257,
+        "sha256": "451a5f6adfb5f60a24cd651517dd45790de3bd0b56a9b40210c8fafb451e4155"
+      },
+      "data": "Synthetic; not for clinical use.",
+      "supports": "Implemented model-output review interface with an explicit qualified-professional decision boundary."
+    }
+  ],
+  "modelDevelopmentSource": {
+    "revision": "4d1a28c58f538c0d8045acb3c268c2f465b43677",
+    "url": "https://github.com/SmartCloverAI/CerviGuardModels/tree/4d1a28c58f538c0d8045acb3c268c2f465b43677",
+    "supports": "Public model-development source exists at a pinned revision.",
+    "boundary": "This source does not identify weights used by a deployment or establish clinical suitability or performance."
+  },
+  "trlPosition": {
+    "projectDossierSource": {
+      "title": "TRL6_CerviGuard.docx",
+      "dated": "2026-01-13",
+      "classification": "TealGuard project dossier; non-public",
+      "role": "Source of the project starting-level statement."
+    },
+    "statement": "The project dossier records CerviGuard as a TRL 6 prototype.",
+    "definitionSource": "https://eic.ec.europa.eu/programme-finder-13_en",
+    "publicEvidenceBoundary": "The public artifacts in this manifest do not independently validate the TRL assignment or demonstrate operation in a relevant environment."
+  },
+  "doesNotEstablish": [
+    "clinical sensitivity, specificity or diagnostic performance",
+    "patient outcomes",
+    "medical-device conformity",
+    "production readiness or production-security assurance",
+    "the model weights used by a current or historical deployment",
+    "operational adoption",
+    "completion of the four planned TealGuard modules",
+    "independent confirmation of TRL 5/6 or demonstration in a relevant environment"
+  ]
+}
