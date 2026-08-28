@@ -133,6 +133,24 @@ test('CerviGuard is presented as the audience-facing foundation without weakenin
   assert.match(section, /\/images\/diagrams\/tealguard-deep-tech-architecture\.png/);
 });
 
+test('TealGuard announcement links follow the active English or Romanian locale', async () => {
+  const site = await readFile('src/lib/site.ts', 'utf8');
+  const home = await readFile('src/components/HomePage.tsx', 'utf8');
+  const section = await readFile('src/components/SectionPage.tsx', 'utf8');
+
+  assert.match(
+    site,
+    /en: 'https:\/\/smartclover\.ro\/blog\/tealguard-financing-contract-signed-sovereign-ai-gynecologic-oncology'/
+  );
+  assert.match(
+    site,
+    /ro: 'https:\/\/smartclover\.ro\/blog\/tealguard-intra-oficial-in-implementare-inteligenta-artificiala-suverana-oncologie-ginecologica'/
+  );
+  assert.match(home, /siteConfig\.announcementUrls\[locale\]/);
+  assert.match(section, /siteConfig\.announcementUrls\[locale\]/);
+  assert.doesNotMatch(`${home}\n${section}`, /siteConfig\.announcementUrl(?!s)/);
+});
+
 test('homepage pathway is user-triggered, finite and current-versus-planned', async () => {
   const hero = await readFile('src/components/HeroScene.tsx', 'utf8');
   const canvas = await readFile('src/components/PathwayCanvas.tsx', 'utf8');

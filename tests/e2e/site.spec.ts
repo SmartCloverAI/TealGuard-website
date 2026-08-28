@@ -131,6 +131,33 @@ test('both locales and every public section return complete pages', async ({ pag
   }
 });
 
+test('homepage and news announcement links follow the active locale', async ({ page }) => {
+  const announcements = {
+    en: {
+      label: 'Read the announcement',
+      href: 'https://smartclover.ro/blog/tealguard-financing-contract-signed-sovereign-ai-gynecologic-oncology'
+    },
+    ro: {
+      label: 'Citiți anunțul',
+      href: 'https://smartclover.ro/blog/tealguard-intra-oficial-in-implementare-inteligenta-artificiala-suverana-oncologie-ginecologica'
+    }
+  } as const;
+
+  for (const [locale, announcement] of Object.entries(announcements)) {
+    await page.goto(`/${locale}`);
+    await expect(page.locator('.news-feature').getByRole('link', { name: announcement.label })).toHaveAttribute(
+      'href',
+      announcement.href
+    );
+
+    await page.goto(`/${locale}/news`);
+    await expect(page.locator('.news-list-item').getByRole('link', { name: announcement.label })).toHaveAttribute(
+      'href',
+      announcement.href
+    );
+  }
+});
+
 test('baseline routes expose bilingual, pinned and bounded evidence', async ({ page }) => {
   for (const locale of ['en', 'ro'] as const) {
     await page.goto(`/${locale}/baseline`);
@@ -208,7 +235,7 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   const version = await request.get('/api/version');
   expect(version.status()).toBe(200);
   const versionBody = await version.json();
-  expect(versionBody.version).toBe('1.0.5');
+  expect(versionBody.version).toBe('1.0.6');
   expect(versionBody.revision).toMatch(/^[0-9a-f]{7,40}$/);
   expect(Number.isNaN(Date.parse(versionBody.builtAt))).toBe(false);
 

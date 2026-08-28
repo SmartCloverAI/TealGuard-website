@@ -269,7 +269,7 @@ function SectionBody({ slug, locale }: { slug: SectionSlug; locale: Locale }) {
             <p className="eyebrow">26.08.2026 · {ro ? 'Contract semnat' : 'Contract signed'}</p>
             <h2>{ro ? 'TealGuard intră oficial în implementare' : 'TealGuard officially enters implementation'}</h2>
             <p>{ro ? 'Aflați cum TealGuard pornește de la fluxul funcțional de screening CerviGuard și definește cele patru module planificate, arhitectura tehnică și obiectivele contractuale de validare.' : "Read how TealGuard starts from CerviGuard's working screening workflow and sets out the four planned modules, technical architecture and contractual validation targets."}</p>
-            <a className="text-link" href={siteConfig.announcementUrl} target="_blank" rel="noreferrer">
+            <a className="text-link" href={siteConfig.announcementUrls[locale]} target="_blank" rel="noreferrer">
               {text(commonCopy.readUpdate, locale)} <ExternalLink aria-hidden="true" size={15} />
             </a>
           </div>

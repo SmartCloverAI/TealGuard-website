@@ -240,7 +240,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             <p className="eyebrow">{labels.announcement} · 26.08.2026</p>
             <h2 id="announcement-heading">{labels.announcementTitle}</h2>
             <p>{labels.announcementBody}</p>
-            <a className="button button--primary" href={siteConfig.announcementUrl} target="_blank" rel="noreferrer">
+            <a className="button button--primary" href={siteConfig.announcementUrls[locale]} target="_blank" rel="noreferrer">
               {text(commonCopy.readUpdate, locale)}
               <ExternalLink aria-hidden="true" size={16} />
             </a>

@@ -7,8 +7,10 @@ export const siteConfig = {
   taxId: '50315196',
   tradeRegister: 'J12/3050/2024',
   smartCloverUrl: 'https://smartclover.ro',
-  announcementUrl:
-    'https://smartclover.ro/blog/tealguard-financing-contract-signed-sovereign-ai-gynecologic-oncology',
+  announcementUrls: {
+    en: 'https://smartclover.ro/blog/tealguard-financing-contract-signed-sovereign-ai-gynecologic-oncology',
+    ro: 'https://smartclover.ro/blog/tealguard-intra-oficial-in-implementare-inteligenta-artificiala-suverana-oncologie-ginecologica'
+  },
   affideaUrl: 'https://affidea.ro/ro-RO/affidea-romania/',
   programmeUrl: 'https://mfe.gov.ro/ghiduri-ms/prioritatea_9_actiunea_b_step/',
   ministryUrl: 'https://mfe.gov.ro/',
