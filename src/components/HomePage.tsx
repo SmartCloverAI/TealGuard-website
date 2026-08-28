@@ -31,7 +31,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         targetsNote: 'Toate cifrele de mai jos sunt obiective contractuale, nu rezultate curente.',
         announcement: 'Anunț de proiect',
         announcementTitle: 'Contractul de finanțare TealGuard a fost semnat',
-        announcementBody: 'HIPERDIA SA și SmartClover au început programul de 36 de luni pentru dezvoltarea și validarea unei platforme AI suverane dedicate oncologiei ginecologice.',
+        announcementBody: 'Contractul de finanțare a fost semnat. HIPERDIA SA și SmartClover au început un program de 36 de luni care extinde fundația CerviGuard către o platformă AI suverană pentru oncologie ginecologică.',
         consortium: 'Consorțiu',
         coordinator: 'Lider de consorțiu și partener pentru implementare clinică',
         technology: 'Partener AI și deep tech',
@@ -51,7 +51,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         targetsNote: 'Every figure below is a contractual target, not a current result.',
         announcement: 'Project announcement',
         announcementTitle: 'The TealGuard financing contract has been signed',
-        announcementBody: 'HIPERDIA SA and SmartClover have begun a 36-month programme to develop and validate a sovereign AI platform for gynecologic oncology.',
+        announcementBody: 'The financing contract is signed. HIPERDIA SA and SmartClover have started a 36-month programme to extend the CerviGuard foundation into a sovereign AI platform for gynecologic oncology.',
         consortium: 'Consortium',
         coordinator: 'Consortium lead and clinical implementation partner',
         technology: 'AI and deep-tech partner',
@@ -126,14 +126,14 @@ export function HomePage({ locale }: { locale: Locale }) {
             </h2>
             <p>
               {locale === 'ro'
-                ? 'O revizie publică CerviGuard din mai 2026 confirmă că aplicația și fluxul de bază precedă proiectul. Versiunea actuală v0.4.11 adaugă controale mai stricte de acces la cazuri și teste focalizate. Capturile datate folosesc exclusiv date sintetice.'
-                : 'A public CerviGuard revision from May 2026 confirms that the application and core workflow predate the project. The current v0.4.11 release adds stronger case-access controls and focused tests. The dated captures use synthetic data only.'}
+                ? 'CerviGuard este punctul de plecare funcțional al SmartClover pentru TealGuard. Fluxul existent reunește preluarea structurată a cazurilor, procesarea imaginilor, accesul controlat pe roluri, starea procesării și istoricul cazului. TealGuard va extinde și valida această fundație prin patru module planificate.'
+                : "CerviGuard is SmartClover's working starting point for TealGuard. Its existing workflow brings together structured case intake, image processing, role-controlled access, processing status and case history. TealGuard will extend and validate that foundation through four planned modules."}
             </p>
             <div className="baseline-proof__meta">
               <span>CerviGuard v{cerviGuardRelease.version}</span>
-              <span>{locale === 'ro' ? 'Cod anterior proiectului' : 'Pre-project source'}</span>
-              <span>{locale === 'ro' ? 'Versiune actuală consolidată' : 'Current hardened release'}</span>
-              <span>{locale === 'ro' ? 'Capturi sintetice' : 'Synthetic captures'}</span>
+              <span>{locale === 'ro' ? 'Preluare structurată a cazurilor' : 'Structured case intake'}</span>
+              <span>{locale === 'ro' ? 'Acces controlat pe roluri' : 'Role-controlled access'}</span>
+              <span>{locale === 'ro' ? 'Istoricul cazului' : 'Case history'}</span>
             </div>
             <Link className="button button--dark baseline-proof__action" href={`/${locale}/baseline`}>
               {locale === 'ro' ? 'Consultați dovezile tehnologice' : 'Review the technology evidence'}
@@ -229,11 +229,11 @@ export function HomePage({ locale }: { locale: Locale }) {
         <div className="shell news-feature">
           <div className="news-feature__media">
             <Image
-              src="/images/social/tealguard-announcement.png"
-              width={1200}
-              height={630}
+              src="/images/diagrams/tealguard-deep-tech-architecture.png"
+              width={1857}
+              height={948}
               sizes="(max-width: 800px) 100vw, 48vw"
-              alt={locale === 'ro' ? 'Anunțul semnării contractului TealGuard' : 'TealGuard contract signing announcement'}
+              alt={locale === 'ro' ? 'Arhitectura deep-tech propusă pentru TealGuard' : 'Proposed TealGuard deep-tech architecture'}
             />
           </div>
           <div className="news-feature__copy">

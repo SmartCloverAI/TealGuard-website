@@ -34,18 +34,25 @@ test('homepage exposes the project identity, status and progressive scene', asyn
     return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 0 && rect.height > 0;
   }))).toBe(true);
   await expect(page.locator('.hero-scene')).toHaveAttribute('data-scene-mode', /webgl|static/);
+  await expect(page.locator('.hero-scene')).toHaveAttribute('data-scene-act', 'current');
+  await expect(page.locator('.hero-scene')).toHaveAttribute('data-playback', 'idle');
+  await expect(page.getByRole('button', { name: 'Play pathway' })).toBeVisible();
+  await expect(page.locator('.scene-narrative').getByText('CerviGuard today', { exact: true })).toBeVisible();
+  await expect(page.locator('.scene-narrative').getByText('TealGuard next', { exact: true })).toBeVisible();
+  await expect(page.locator('.scene-narrative').getByText('Four planned modules', { exact: true })).toBeVisible();
+  await expect(page.getByText('Planned module', { exact: true })).toHaveCount(4);
   await expect(page.getByRole('link', { name: 'Inspect the CerviGuard evidence' })).toHaveAttribute('href', '/en/baseline');
   await expect(page.getByRole('heading', { level: 2, name: 'TealGuard builds on CerviGuard' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Review the technology evidence' })).toHaveAttribute('href', '/en/baseline');
-  await expect(page.getByText('Pre-project source', { exact: true })).toBeVisible();
-  await expect(page.getByText('Current hardened release', { exact: true })).toBeVisible();
-  await expect(page.getByText('Synthetic captures', { exact: true })).toBeVisible();
+  await expect(page.getByText('Structured case intake', { exact: true })).toBeVisible();
+  await expect(page.getByText('Role-controlled access', { exact: true })).toBeVisible();
+  await expect(page.getByText('Case history', { exact: true })).toBeVisible();
 
   const announcementArtwork = page.locator('.news-feature__media img');
   await announcementArtwork.scrollIntoViewIfNeeded();
   await expect(announcementArtwork).toHaveCSS('object-fit', 'contain');
   const announcementBox = await announcementArtwork.boundingBox();
-  expect((announcementBox?.width ?? 0) / (announcementBox?.height ?? 1)).toBeCloseTo(1200 / 630, 1);
+  expect((announcementBox?.width ?? 0) / (announcementBox?.height ?? 1)).toBeCloseTo(1857 / 948, 1);
 
   if ((await page.locator('.hero-scene').getAttribute('data-scene-mode')) === 'webgl') {
     await expect(page.locator('.hero-scene')).toHaveAttribute('data-scene-ready', 'true', { timeout: 10_000 });
@@ -58,6 +65,58 @@ test('homepage exposes the project identity, status and progressive scene', asyn
 
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
   expect(consoleErrors).toEqual([]);
+});
+
+test('pathway waits for a command, fans out once and becomes pixel-stable', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'finite canvas timing check runs once');
+
+  await page.goto('/en');
+  const scene = page.locator('.hero-scene');
+  const play = page.getByRole('button', { name: 'Play pathway' });
+  await expect(scene).toHaveAttribute('data-scene-act', 'current');
+  await expect(scene).toHaveAttribute('data-playback', 'idle');
+  await page.waitForTimeout(1100);
+  await expect(scene).toHaveAttribute('data-scene-act', 'current');
+  await expect(scene).toHaveAttribute('data-playback', 'idle');
+
+  if ((await scene.getAttribute('data-scene-mode')) === 'webgl') {
+    await expect(scene).toHaveAttribute('data-scene-ready', 'true', { timeout: 10_000 });
+    const canvas = page.locator('.scene-canvas canvas');
+    const firstIdleFrame = await canvas.screenshot();
+    await page.waitForTimeout(500);
+    const secondIdleFrame = await canvas.screenshot();
+    expect(firstIdleFrame.equals(secondIdleFrame)).toBe(true);
+  }
+
+  await play.click();
+  await expect(scene).toHaveAttribute('data-playback', 'playing');
+  await expect(scene).toHaveAttribute('data-scene-act', 'programme', { timeout: 1400 });
+  await expect(scene).toHaveAttribute('data-scene-act', 'modules', { timeout: 1400 });
+  await expect(scene).toHaveAttribute('data-playback', 'stopped', { timeout: 2100 });
+  await expect(page.getByRole('button', { name: 'Replay pathway' })).toBeVisible();
+
+  if ((await scene.getAttribute('data-scene-mode')) === 'webgl') {
+    const canvas = page.locator('.scene-canvas canvas');
+    const firstStoppedFrame = await canvas.screenshot();
+    await page.waitForTimeout(500);
+    const secondStoppedFrame = await canvas.screenshot();
+    expect(firstStoppedFrame.equals(secondStoppedFrame)).toBe(true);
+
+    const viewport = page.viewportSize();
+    expect(viewport).not.toBeNull();
+    await page.setViewportSize({ width: viewport!.width - 1, height: viewport!.height });
+    await page.setViewportSize(viewport!);
+    await page.waitForTimeout(250);
+    const stoppedFrameAfterNeutralResize = await canvas.screenshot();
+    expect(firstStoppedFrame.equals(stoppedFrameAfterNeutralResize)).toBe(true);
+  }
+
+  const navigator = page.getByRole('button', { name: 'Planned module: NavigatorAI' });
+  await navigator.click();
+  await expect(navigator).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.scene-description')).toContainText('Clinical questions stay with qualified professionals.');
+  await expect(scene).toHaveAttribute('data-scene-act', 'modules');
+  await expect(scene).toHaveAttribute('data-playback', 'stopped');
 });
 
 test('both locales and every public section return complete pages', async ({ page }) => {
@@ -149,7 +208,7 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   const version = await request.get('/api/version');
   expect(version.status()).toBe(200);
   const versionBody = await version.json();
-  expect(versionBody.version).toBe('1.0.4');
+  expect(versionBody.version).toBe('1.0.5');
   expect(versionBody.revision).toMatch(/^[0-9a-f]{7,40}$/);
   expect(Number.isNaN(Date.parse(versionBody.builtAt))).toBe(false);
 
@@ -281,6 +340,11 @@ test('core project content survives without JavaScript', async ({ browser }) => 
   await page.goto('/en');
   await expect(page.getByRole('heading', { level: 1, name: 'TealGuard' })).toBeVisible();
   await expect(page.getByText('Four planned modules across one clinical pathway.')).toBeVisible();
+  await expect(page.locator('.scene-narrative').getByText('CerviGuard today', { exact: true })).toBeVisible();
+  await expect(page.locator('.scene-narrative').getByText('TealGuard next', { exact: true })).toBeVisible();
+  await expect(page.locator('.scene-narrative').getByText('Four planned modules', { exact: true })).toBeVisible();
+  await expect(page.getByText('Planned module', { exact: true })).toHaveCount(4);
+  await expect(page.getByRole('button', { name: 'Play pathway' })).toHaveCount(0);
   await expect(page.getByRole('heading', { level: 2, name: 'TealGuard builds on CerviGuard' })).toBeVisible();
   await expect(page.locator('.scene-fallback')).toBeVisible();
   await page.goto('/en/baseline');
@@ -318,10 +382,49 @@ test('baseline evidence reflows without clipping or overlap', async ({ page, isM
 test('reduced-motion mode keeps a readable static pathway', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/en');
+  await page.getByRole('button', { name: 'Play pathway' }).click();
+  await expect(page.locator('.hero-scene')).toHaveAttribute('data-scene-act', 'modules');
+  await expect(page.locator('.hero-scene')).toHaveAttribute('data-playback', 'stopped');
+  await expect(page.getByRole('button', { name: 'Replay pathway' })).toBeVisible();
   await expect(page.getByRole('button', { name: /NavigatorAI/ })).toBeVisible();
   await page.getByRole('button', { name: /NavigatorAI/ }).click();
   await expect(page.locator('.scene-description')).toContainText('NavigatorAI');
+  await expect(page.locator('.scene-description')).toContainText('qualified professionals');
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
+});
+
+test('pathway controls stay readable and non-overlapping at supported widths', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'cross-viewport pathway layout check runs once');
+
+  for (const viewport of [
+    { width: 1440, height: 1000 },
+    { width: 1024, height: 900 },
+    { width: 620, height: 900 },
+    { width: 390, height: 844 },
+    { width: 320, height: 844 }
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/ro');
+    const scene = page.locator('.hero-scene');
+    const controls = page.locator('.scene-controls');
+    const description = page.locator('.scene-description');
+    await expect(page.getByRole('button', { name: 'Porniți parcursul' })).toBeVisible();
+    await expect(page.getByText('Modul planificat', { exact: true })).toHaveCount(4);
+
+    const [sceneBox, controlsBox, descriptionBox] = await Promise.all([
+      scene.boundingBox(),
+      controls.boundingBox(),
+      description.boundingBox()
+    ]);
+    expect(sceneBox, `${viewport.width}px scene`).not.toBeNull();
+    expect(controlsBox, `${viewport.width}px controls`).not.toBeNull();
+    expect(descriptionBox, `${viewport.width}px description`).not.toBeNull();
+    expect((controlsBox?.y ?? 0) + (controlsBox?.height ?? 0), `${viewport.width}px controls/description overlap`)
+      .toBeLessThanOrEqual((descriptionBox?.y ?? 0) + 1);
+    expect((descriptionBox?.y ?? 0) + (descriptionBox?.height ?? 0), `${viewport.width}px scene containment`)
+      .toBeLessThanOrEqual((sceneBox?.y ?? 0) + (sceneBox?.height ?? 0) + 1);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), `${viewport.width}px overflow`).toBe(true);
+  }
 });
 
 test('a lost WebGL context restores the static hero fallback', async ({ page }) => {

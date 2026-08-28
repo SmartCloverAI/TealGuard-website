@@ -169,16 +169,28 @@ function SectionBody({ slug, locale }: { slug: SectionSlug; locale: Locale }) {
     case 'platform':
       return (
         <>
+          <div className="content-grid content-grid--intro">
+            <div>
+              <p className="eyebrow">{ro ? 'Fundație existentă' : 'Existing foundation'}</p>
+              <h2>{ro ? 'De la CerviGuard la TealGuard' : 'From CerviGuard to TealGuard'}</h2>
+              <p>{ro
+                ? 'CerviGuard reunește deja într-un flux funcțional de screening preluarea structurată a cazurilor, procesarea imaginilor, accesul controlat pe roluri, starea procesării și istoricul cazului. TealGuard va extinde și valida această fundație prin cele patru module planificate și prin controale comune pentru interoperabilitate, guvernanță și implementare.'
+                : 'CerviGuard already brings together structured case intake, image processing, role-controlled access, processing status and case history in a working screening workflow. TealGuard will extend and validate that foundation through the four planned modules and shared interoperability, governance and deployment controls.'}</p>
+              <Link className="text-link" href={`/${locale}/baseline`}>
+                {ro ? 'Consultați dovezile tehnologice datate' : 'Review the dated technology evidence'}
+                <ArrowRight aria-hidden="true" size={16} />
+              </Link>
+            </div>
+            <div className="callout">
+              <span>{ro ? 'CerviGuard astăzi' : 'CerviGuard today'}</span>
+              <strong>{ro ? 'Un flux funcțional de screening' : 'A working screening workflow'}</strong>
+              <p>{ro
+                ? 'Dovezile publicate arată interfețe sintetice pentru preluarea și verificarea cazurilor. Acestea nu stabilesc performanța clinică sau pregătirea finală a produsului.'
+                : 'The published evidence shows synthetic case-intake and review interfaces. It does not establish clinical performance or final product readiness.'}</p>
+            </div>
+          </div>
           <Modules locale={locale} />
           <ArchitectureLayers locale={locale} />
-          <EvidenceFigure
-            locale={locale}
-            src="/images/diagrams/tealguard-platform-modules.png"
-            alt={ro ? 'Diagramă a celor patru module TealGuard și a fundației comune' : 'Diagram of the four TealGuard modules and their shared foundation'}
-            caption={ro ? 'Vedere publică a arhitecturii funcționale. Diagrama descrie direcția proiectului, nu un produs clinic certificat.' : 'Public view of the functional architecture. The diagram describes the project direction, not a certified clinical product.'}
-            title={ro ? 'Parcursul funcțional' : 'Functional pathway'}
-            collapsed={ro}
-          />
           <EvidenceFigure
             locale={locale}
             src="/images/diagrams/tealguard-deep-tech-architecture.png"
@@ -247,11 +259,16 @@ function SectionBody({ slug, locale }: { slug: SectionSlug; locale: Locale }) {
     case 'news':
       return (
         <article className="news-list-item">
-          <Image src="/images/social/tealguard-announcement.png" width={1200} height={630} alt="" />
+          <Image
+            src="/images/diagrams/tealguard-deep-tech-architecture.png"
+            width={1857}
+            height={948}
+            alt={ro ? 'Arhitectura deep-tech propusă pentru TealGuard' : 'Proposed TealGuard deep-tech architecture'}
+          />
           <div>
             <p className="eyebrow">26.08.2026 · {ro ? 'Contract semnat' : 'Contract signed'}</p>
             <h2>{ro ? 'TealGuard intră oficial în implementare' : 'TealGuard officially enters implementation'}</h2>
-            <p>{ro ? 'Anunțul complet prezintă programul, consorțiul, modulele și obiectivele contractuale.' : 'The full announcement presents the programme, consortium, modules and contractual targets.'}</p>
+            <p>{ro ? 'Aflați cum TealGuard pornește de la fluxul funcțional de screening CerviGuard și definește cele patru module planificate, arhitectura tehnică și obiectivele contractuale de validare.' : "Read how TealGuard starts from CerviGuard's working screening workflow and sets out the four planned modules, technical architecture and contractual validation targets."}</p>
             <a className="text-link" href={siteConfig.announcementUrl} target="_blank" rel="noreferrer">
               {text(commonCopy.readUpdate, locale)} <ExternalLink aria-hidden="true" size={15} />
             </a>

@@ -8,8 +8,10 @@ const sourceFiles = [
   'src/content/project.ts',
   'src/content/modules.ts',
   'src/components/BaselineEvidence.tsx',
+  'src/components/HeroScene.tsx',
   'src/components/HomePage.tsx',
   'src/components/LocaleSwitch.tsx',
+  'src/components/PathwayCanvas.tsx',
   'src/components/SectionPage.tsx',
   'src/app/[locale]/layout.tsx'
 ];
@@ -34,6 +36,14 @@ const evidenceAssets = {
   }
 };
 
+const publicationAssets = {
+  'public/images/diagrams/tealguard-deep-tech-architecture.png': {
+    sha256: '2325a92332959e2773182ff157e8f647a8fc961c05b8c603b0f7779fc3fbced6',
+    width: 1857,
+    height: 948
+  }
+};
+
 test('official funding and Affidea assets remain byte-identical', async () => {
   for (const [path, expected] of Object.entries(officialAssets)) {
     const bytes = await readFile(path);
@@ -43,6 +53,16 @@ test('official funding and Affidea assets remain byte-identical', async () => {
 
 test('CerviGuard evidence captures retain approved bytes and dimensions', async () => {
   for (const [path, expected] of Object.entries(evidenceAssets)) {
+    const bytes = await readFile(path);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), expected.sha256, path);
+    assert.equal(bytes.subarray(1, 4).toString('ascii'), 'PNG', `${path} signature`);
+    assert.equal(bytes.readUInt32BE(16), expected.width, `${path} width`);
+    assert.equal(bytes.readUInt32BE(20), expected.height, `${path} height`);
+  }
+});
+
+test('operator-supplied TealGuard announcement artwork retains its exact bytes and dimensions', async () => {
+  for (const [path, expected] of Object.entries(publicationAssets)) {
     const bytes = await readFile(path);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), expected.sha256, path);
     assert.equal(bytes.subarray(1, 4).toString('ascii'), 'PNG', `${path} signature`);
@@ -96,6 +116,52 @@ test('planned work is not described as operational', async () => {
   assert.match(source, /The proposed architecture assigns each planned module/);
   assert.match(source, /Specifications, governance, engineering and integration are the next areas of work/);
   assert.doesNotMatch(source, /Research, governance and integration are now under way/);
+});
+
+test('CerviGuard is presented as the audience-facing foundation without weakening evidence boundaries', async () => {
+  const home = await readFile('src/components/HomePage.tsx', 'utf8');
+  const section = await readFile('src/components/SectionPage.tsx', 'utf8');
+
+  assert.match(home, /CerviGuard is SmartClover's working starting point for TealGuard/);
+  assert.match(home, /structured case intake, image processing, role-controlled access, processing status and case history/);
+  assert.match(section, /From CerviGuard to TealGuard/);
+  assert.match(section, /four planned modules and shared interoperability, governance and deployment controls/);
+  assert.match(section, /does not establish clinical performance or final product readiness/);
+  assert.doesNotMatch(home, /A public CerviGuard revision from May 2026/);
+  assert.doesNotMatch(section, /tealguard-platform-modules\.png/);
+  assert.match(home, /\/images\/diagrams\/tealguard-deep-tech-architecture\.png/);
+  assert.match(section, /\/images\/diagrams\/tealguard-deep-tech-architecture\.png/);
+});
+
+test('homepage pathway is user-triggered, finite and current-versus-planned', async () => {
+  const hero = await readFile('src/components/HeroScene.tsx', 'utf8');
+  const canvas = await readFile('src/components/PathwayCanvas.tsx', 'utf8');
+
+  for (const label of [
+    'CerviGuard today',
+    'TealGuard next',
+    'Four planned modules',
+    'CerviGuard astăzi',
+    'TealGuard: etapa următoare',
+    'Patru module planificate',
+    'Play pathway',
+    'Replay pathway',
+    'Planned module',
+    'Modul planificat'
+  ]) assert.match(hero, new RegExp(label));
+
+  assert.match(hero, /const actDurations = \[900, 900, 1400\]/);
+  assert.match(hero, /data-scene-act=\{sceneActs\[sequenceAct\]\}/);
+  assert.match(hero, /data-playback=\{playbackState\}/);
+  assert.match(hero, /sequenceState === 'running'/);
+  assert.match(hero, /Clinical interpretation stays with qualified professionals/);
+  assert.match(hero, /Fără decizii clinice/);
+  assert.doesNotMatch(hero, /autoPlay|setInterval/);
+
+  assert.match(canvas, /const finiteMotionDurations = \[0\.65, 0\.72, 1\.15\]/);
+  assert.match(canvas, /modulePositions\.map/);
+  assert.match(canvas, /frameloop=\{animating \? 'always' : 'demand'\}/);
+  assert.doesNotMatch(canvas, /FlowPulse|getElapsedTime|%\s*1/);
 });
 
 test('baseline evidence is pinned, bilingual and claim-bounded', async () => {
