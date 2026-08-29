@@ -151,6 +151,29 @@ test('TealGuard announcement links follow the active English or Romanian locale'
   assert.doesNotMatch(`${home}\n${section}`, /siteConfig\.announcementUrl(?!s)/);
 });
 
+test('footer resolves and displays the current runtime host', async () => {
+  const footer = await readFile('src/components/Footer.tsx', 'utf8');
+  const servedBy = await readFile('src/components/ServedBy.tsx', 'utf8');
+  const endpoint = await readFile('src/app/api/host-id/route.ts', 'utf8');
+
+  assert.match(footer, /<ServedBy locale=\{locale\} \/>/);
+  assert.match(servedBy, /fetch\('\/api\/host-id'/);
+  assert.match(servedBy, /Served by/);
+  assert.match(servedBy, /Servit de/);
+  assert.match(servedBy, /<strong>\{hostId\}<\/strong>/);
+  assert.match(servedBy, /data-runtime-host=\{hostId\}/);
+  assert.match(endpoint, /Cache-Control': 'no-store, max-age=0'/);
+
+  for (const variable of [
+    'EE_HOST_ID',
+    'R1EN_HOST_ID',
+    'RATIO1_HOST_ID',
+    'NEXT_PUBLIC_EE_HOST_ID',
+    'NEXT_PUBLIC_R1EN_HOST_ID',
+    'NEXT_PUBLIC_RATIO1_HOST_ID'
+  ]) assert.match(endpoint, new RegExp(`process\\.env\\.${variable}`));
+});
+
 test('homepage pathway is user-triggered, finite and current-versus-planned', async () => {
   const hero = await readFile('src/components/HeroScene.tsx', 'utf8');
   const canvas = await readFile('src/components/PathwayCanvas.tsx', 'utf8');

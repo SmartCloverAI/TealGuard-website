@@ -1325,6 +1325,32 @@ h3 {
   border-top: 1px solid #203939;
 }
 
+.site-footer__runtime,
+.site-footer__served-by {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-footer__runtime {
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
+
+.site-footer__served-by {
+  gap: 6px;
+  color: #9fb4b1;
+}
+
+.site-footer__served-by svg {
+  flex: 0 0 auto;
+  color: #61c9c1;
+}
+
+.site-footer__served-by strong {
+  color: #e2eeec;
+  font-weight: 650;
+}
+
 .site-footer__base a {
   display: inline-flex;
   align-items: center;
@@ -2926,6 +2952,12 @@ h3 {
     flex-direction: column;
     justify-content: center;
     padding-block: 18px;
+  }
+
+  .site-footer__runtime {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .page-hero__inner {

@@ -47,6 +47,8 @@ test('homepage exposes the project identity, status and progressive scene', asyn
   await expect(page.getByText('Structured case intake', { exact: true })).toBeVisible();
   await expect(page.getByText('Role-controlled access', { exact: true })).toBeVisible();
   await expect(page.getByText('Case history', { exact: true })).toBeVisible();
+  await expect(page.locator('.site-footer__served-by')).toContainText('Served by');
+  await expect(page.locator('.site-footer__served-by strong')).not.toHaveText('');
 
   const announcementArtwork = page.locator('.news-feature__media img');
   await announcementArtwork.scrollIntoViewIfNeeded();
@@ -232,10 +234,15 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   expect(await health.json()).toEqual({ status: 'ok', service: 'tealguard-website' });
   expect(health.headers()['cache-control']).toBe('no-store');
 
+  const hostId = await request.get('/api/host-id');
+  expect(hostId.status()).toBe(200);
+  expect(await hostId.json()).toEqual({ hostId: expect.any(String) });
+  expect(hostId.headers()['cache-control']).toBe('no-store, max-age=0');
+
   const version = await request.get('/api/version');
   expect(version.status()).toBe(200);
   const versionBody = await version.json();
-  expect(versionBody.version).toBe('1.0.6');
+  expect(versionBody.version).toBe('1.0.7');
   expect(versionBody.revision).toMatch(/^[0-9a-f]{7,40}$/);
   expect(Number.isNaN(Date.parse(versionBody.builtAt))).toBe(false);
 

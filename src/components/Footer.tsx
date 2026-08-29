@@ -5,6 +5,7 @@ import { commonCopy, navigation, text } from '@/content/project';
 import { siteConfig, type Locale } from '@/lib/site';
 
 import { Brand } from './Brand';
+import { ServedBy } from './ServedBy';
 
 export function Footer({ locale }: { locale: Locale }) {
   const legal = navigation.filter((item) => item.group === 'legal');
@@ -39,7 +40,10 @@ export function Footer({ locale }: { locale: Locale }) {
         </div>
       </div>
       <div className="site-footer__base shell">
-        <span>SMIS 358561 · {text(commonCopy.lastUpdated, locale)}</span>
+        <div className="site-footer__runtime">
+          <span>SMIS 358561 · {text(commonCopy.lastUpdated, locale)}</span>
+          <ServedBy locale={locale} />
+        </div>
         <a href={siteConfig.programmeUrl} target="_blank" rel="noreferrer">
           {locale === 'ro' ? 'Programul Sănătate 2021–2027' : 'Health Programme 2021–2027'}
           <ArrowUpRight aria-hidden="true" size={14} />
