@@ -177,7 +177,7 @@ function SectionBody({ slug, locale }: { slug: SectionSlug; locale: Locale }) {
                 ? 'CerviGuard reunește deja într-un flux funcțional de screening preluarea structurată a cazurilor, procesarea imaginilor, accesul controlat pe roluri, starea procesării și istoricul cazului. TealGuard va extinde și valida această fundație prin cele patru module planificate și prin controale comune pentru interoperabilitate, guvernanță și implementare.'
                 : 'CerviGuard already brings together structured case intake, image processing, role-controlled access, processing status and case history in a working screening workflow. TealGuard will extend and validate that foundation through the four planned modules and shared interoperability, governance and deployment controls.'}</p>
               <Link className="text-link" href={`/${locale}/baseline`}>
-                {ro ? 'Consultați dovezile tehnologice datate' : 'Review the dated technology evidence'}
+                {ro ? 'Vedeți capturile și codul CerviGuard' : 'View CerviGuard screenshots and source'}
                 <ArrowRight aria-hidden="true" size={16} />
               </Link>
             </div>
@@ -185,8 +185,8 @@ function SectionBody({ slug, locale }: { slug: SectionSlug; locale: Locale }) {
               <span>{ro ? 'CerviGuard astăzi' : 'CerviGuard today'}</span>
               <strong>{ro ? 'Un flux funcțional de screening' : 'A working screening workflow'}</strong>
               <p>{ro
-                ? 'Dovezile publicate arată interfețe sintetice pentru preluarea și verificarea cazurilor. Acestea nu stabilesc performanța clinică sau pregătirea finală a produsului.'
-                : 'The published evidence shows synthetic case-intake and review interfaces. It does not establish clinical performance or final product readiness.'}</p>
+                ? 'Capturile de ecran CerviGuard prezintă fluxurile pentru preluarea și verificarea cazurilor. Ele nu raportează performanța clinică și nu stabilesc pregătirea finală a produsului. Programul TealGuard va evalua aceste aspecte prin etapele de validare planificate.'
+                : 'CerviGuard screenshots show the case-intake and review workflows. They do not report clinical performance or establish final product readiness. The TealGuard programme will evaluate these areas through its planned validation stages.'}</p>
             </div>
           </div>
           <Modules locale={locale} />
@@ -206,9 +206,9 @@ function SectionBody({ slug, locale }: { slug: SectionSlug; locale: Locale }) {
         <>
           <div className="target-warning">
             <strong>{ro ? 'Obiective, nu rezultate curente' : 'Targets, not current results'}</strong>
-            <p>{ro ? 'Documentul din dosarul proiectului „TRL6_CerviGuard.docx”, datat 13 ianuarie 2026, consemnează CerviGuard la TRL 6 drept punct de plecare. Codul și capturile publice confirmă existența aplicației, dar nu validează independent demonstrarea într-un mediu relevant sau performanța clinică. Integrarea la TRL 7, validarea prospectivă la TRL 8 și operarea la TRL 9 rămân obiective ale programului.' : 'The project-dossier document “TRL6_CerviGuard.docx”, dated 13 January 2026, records CerviGuard at TRL 6 as the starting point. Public code and captures confirm that the application exists, but do not independently validate demonstration in a relevant environment or clinical performance. TRL 7 integration, TRL 8 prospective validation and TRL 9 operation remain programme targets.'}</p>
+            <p>{ro ? 'Documentul din dosarul proiectului „TRL6_CerviGuard.docx”, datat 13 ianuarie 2026, consemnează CerviGuard la TRL 6 drept punct de plecare. Codul și capturile de ecran publice documentează aplicația, dar nu validează independent demonstrarea într-un mediu relevant sau performanța clinică. Integrarea la TRL 7, validarea prospectivă la TRL 8 și operarea la TRL 9 rămân obiective ale programului.' : 'The project-dossier document “TRL6_CerviGuard.docx”, dated 13 January 2026, records CerviGuard at TRL 6 as the starting point. Public source code and screenshots document the application, but do not independently validate demonstration in a relevant environment or clinical performance. TRL 7 integration, TRL 8 prospective validation and TRL 9 operation remain programme targets.'}</p>
             <Link className="text-link target-warning__link" href={`/${locale}/baseline`}>
-              {ro ? 'Consultați dovezile tehnologice și limitele lor' : 'Review the technology evidence and its limits'}
+              {ro ? 'Consultați punctul de plecare CerviGuard' : 'Review the CerviGuard starting point'}
               <ArrowRight aria-hidden="true" size={16} />
             </Link>
           </div>

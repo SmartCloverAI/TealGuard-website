@@ -20,28 +20,28 @@ export const cerviGuardRelease = {
 } as const;
 
 export const baselineCopy = {
-  scopeHeading: localized('What can be inspected today', 'Ce poate fi verificat în prezent'),
+  scopeHeading: localized('What CerviGuard already includes', 'Ce include deja CerviGuard'),
   scopeIntroduction: localized(
-    'This dated record separates CerviGuard code that predates TealGuard, the current hardened release and the work funded through the programme.',
-    'Această evidență datată separă codul CerviGuard anterior proiectului TealGuard, versiunea actuală consolidată și activitatea finanțată prin program.'
+    'CerviGuard provides the existing software foundation for TealGuard. The programme will extend it through four planned modules and clinical validation.',
+    'CerviGuard oferă fundația software existentă pentru TealGuard. Programul o va extinde prin patru module planificate și validare clinică.'
   ),
-  capturesHeading: localized('Dated interface evidence', 'Dovezi datate ale interfeței'),
+  capturesHeading: localized('CerviGuard screenshots', 'Capturi de ecran CerviGuard'),
   capturesIntroduction: localized(
-    'SmartClover produced both captures from a local production build configured for synthetic demonstration. The account, case, values and image placeholder contain no patient data.',
-    'SmartClover a realizat ambele capturi dintr-o versiune locală de producție configurată pentru demonstrație cu date sintetice. Contul, cazul, valorile și substitutul imaginii nu conțin date ale pacientelor.'
+    'Screenshots from CerviGuard v0.4.11 show structured case intake and model-output review. The screens use demonstration data.',
+    'Capturile de ecran din CerviGuard v0.4.11 prezintă preluarea structurată a cazurilor și verificarea rezultatelor modelelor. Ecranele folosesc date demonstrative.'
   ),
-  inventoryHeading: localized('Verification sources', 'Surse pentru verificare'),
+  inventoryHeading: localized('CerviGuard sources and links', 'Surse și legături CerviGuard'),
   inventoryIntroduction: localized(
-    'The record distinguishes pre-project source, the current hardened revision, a dated live observation and model-development source. A deployment URL remains mutable.',
-    'Evidența distinge codul anterior proiectului, revizia actuală consolidată, o observație datată a aplicației publice și codul pentru dezvoltarea modelelor. Adresa unei implementări rămâne schimbătoare.'
+    'These links provide the application source available before TealGuard, the current source, the CerviGuard sign-in page and model-development code.',
+    'Aceste legături oferă codul aplicației disponibil înainte de TealGuard, codul actual, pagina de autentificare CerviGuard și codul pentru dezvoltarea modelelor.'
   ),
-  trlHeading: localized('Where the TRL 6 statement comes from', 'Sursa afirmației privind TRL 6'),
+  trlHeading: localized("CerviGuard's TRL 6 starting point", 'Punctul de plecare TRL 6 al CerviGuard'),
   trlBody: localized(
-    'The TealGuard project dossier includes “TRL6_CerviGuard.docx”, dated 13 January 2026, which records CerviGuard as a TRL 6 prototype. That dossier is the source of the starting-level statement. The public artifacts here confirm pre-project application code and a dated current release; they do not independently demonstrate operation in a relevant environment or validate the TRL assignment.',
-    'Dosarul proiectului TealGuard include documentul „TRL6_CerviGuard.docx”, datat 13 ianuarie 2026, care consemnează CerviGuard drept prototip TRL 6. Acest document este sursa afirmației privind nivelul inițial. Artefactele publice de aici confirmă existența codului aplicației înaintea proiectului și o versiune actuală datată; ele nu demonstrează independent funcționarea într-un mediu relevant și nu validează atribuirea TRL.'
+    'The TealGuard project dossier includes “TRL6_CerviGuard.docx”, dated 13 January 2026. It records CerviGuard as a TRL 6 prototype and is the source for the programme\'s starting-level statement. The public source and screenshots document the application but do not independently validate operation in a relevant environment or the TRL assignment.',
+    'Dosarul proiectului TealGuard include documentul „TRL6_CerviGuard.docx”, datat 13 ianuarie 2026. Acesta consemnează CerviGuard drept prototip TRL 6 și este sursa afirmației privind nivelul inițial al programului. Codul și capturile de ecran publice documentează aplicația, dar nu validează independent funcționarea într-un mediu relevant sau atribuirea TRL.'
   ),
-  supportsHeading: localized('This public record supports', 'Aceste dovezi publice susțin'),
-  limitsHeading: localized('This public record does not establish', 'Aceste dovezi publice nu stabilesc'),
+  supportsHeading: localized('What the public material shows', 'Ce prezintă materialele publice'),
+  limitsHeading: localized('What the public material does not show', 'Ce nu prezintă materialele publice'),
   manifestLabel: localized('Open the machine-readable evidence manifest', 'Deschideți manifestul de dovezi într-un format prelucrabil automat'),
   ecLabel: localized('European Commission TRL definitions', 'Definițiile TRL ale Comisiei Europene')
 } as const;
@@ -61,10 +61,10 @@ export const baselineScope = [
     id: 'current',
     state: 'current',
     label: localized('Current public release', 'Versiunea publică actuală'),
-    title: localized('Hardened workflow evidence', 'Dovezi ale fluxului consolidat'),
+    title: localized('CerviGuard v0.4.11', 'CerviGuard v0.4.11'),
     description: localized(
-      'Version 0.4.11 adds owner-or-administrator case controls, focused access-control tests and explicit synthetic-demo boundaries. It was released after TealGuard implementation began.',
-      'Versiunea 0.4.11 adaugă acces la cazuri pentru proprietar sau administrator, teste focalizate ale controlului accesului și delimitări explicite pentru demonstrația sintetică. A fost publicată după începerea implementării TealGuard.'
+      'Version 0.4.11 includes owner-or-administrator case controls, focused access-control tests and clear boundaries for demonstration data. It was released after TealGuard implementation began.',
+      'Versiunea 0.4.11 include acces la cazuri pentru proprietar sau administrator, teste focalizate ale controlului accesului și delimitări clare pentru datele demonstrative. A fost publicată după începerea implementării TealGuard.'
     )
   },
   {
@@ -86,18 +86,18 @@ export const baselineCaptures = [
     width: 1440,
     height: 960,
     sha256: 'bc54263ff8847227e30feff84f6c2368ce711a8ed32e5062a5920b9c202a5d09',
-    title: localized('Structured case intake', 'Preluarea structurată a cazului'),
+    title: localized('CerviGuard case intake', 'Preluarea cazului în CerviGuard'),
     alt: localized(
-      'Synthetic CerviGuard demonstration showing an authenticated cervical-screening case-intake form, privacy guidance and the demo-only banner.',
-      'Demonstrație sintetică CerviGuard cu un formular autentificat pentru preluarea unui caz de screening cervical, instrucțiuni de confidențialitate și marcajul pentru demonstrație.'
+      'CerviGuard v0.4.11 case-intake screen showing an authenticated cervical-screening form, privacy guidance and the demonstration banner.',
+      'Ecran CerviGuard v0.4.11 pentru preluarea unui caz de screening cervical, cu formular autentificat, instrucțiuni de confidențialitate și marcajul pentru demonstrație.'
     ),
     caption: localized(
-      'Publisher-produced capture of CerviGuard v0.4.11, made on 28 August 2026 from a local production build configured for synthetic demonstration. No patient data or clinical result is shown.',
-      'Captură realizată de SmartClover din CerviGuard v0.4.11 la 28 august 2026, folosind o versiune locală de producție configurată pentru demonstrație sintetică. Nu sunt afișate date ale pacientelor sau rezultate clinice.'
+      'CerviGuard v0.4.11 screenshot.',
+      'Captură de ecran CerviGuard v0.4.11.'
     ),
     supports: localized(
-      'An implemented, authenticated intake surface with upload boundaries and de-identification guidance.',
-      'O interfață autentificată și implementată pentru preluarea cazurilor, cu limite de încărcare și instrucțiuni de de-identificare.'
+      'A working, authenticated case-intake screen with upload limits and de-identification guidance.',
+      'Un ecran funcțional și autentificat pentru preluarea cazurilor, cu limite de încărcare și instrucțiuni de de-identificare.'
     )
   },
   {
@@ -106,18 +106,18 @@ export const baselineCaptures = [
     width: 1200,
     height: 1257,
     sha256: '451a5f6adfb5f60a24cd651517dd45790de3bd0b56a9b40210c8fafb451e4155',
-    title: localized('Model-output review', 'Verificarea rezultatelor modelelor'),
+    title: localized('CerviGuard case review', 'Verificarea cazului în CerviGuard'),
     alt: localized(
-      'Synthetic CerviGuard review screen with case metadata, a patient-image placeholder, demonstration model outputs and a qualified-professional decision boundary.',
-      'Ecran sintetic CerviGuard pentru verificarea unui caz, cu metadate, un substitut pentru imaginea pacientei, rezultate demonstrative ale modelelor și limita decizională rezervată profesioniștilor calificați.'
+      'CerviGuard v0.4.11 case-review screen with case metadata, an image placeholder, demonstration model outputs and a qualified-professional decision boundary.',
+      'Ecran CerviGuard v0.4.11 pentru verificarea unui caz, cu metadate, un substitut pentru imagine, rezultate demonstrative ale modelelor și limita decizională rezervată profesioniștilor calificați.'
     ),
     caption: localized(
-      'Synthetic interface evidence from CerviGuard v0.4.11. The displayed classifications and confidence values are demonstration data, not clinical findings or model-performance results.',
-      'Dovadă sintetică a interfeței CerviGuard v0.4.11. Clasificările și valorile de încredere afișate sunt date demonstrative, nu constatări clinice sau rezultate privind performanța modelelor.'
+      'CerviGuard v0.4.11 screenshot.',
+      'Captură de ecran CerviGuard v0.4.11.'
     ),
     supports: localized(
-      'An implemented review surface that presents model outputs while keeping interpretation and follow-up decisions with qualified professionals.',
-      'O interfață de verificare implementată, care prezintă rezultatele modelelor și păstrează interpretarea și deciziile de monitorizare la profesioniști calificați.'
+      'A working review screen that displays model outputs while leaving interpretation and follow-up decisions to qualified professionals.',
+      'Un ecran funcțional de verificare, care afișează rezultatele modelelor și păstrează interpretarea și deciziile de monitorizare la profesioniști calificați.'
     )
   }
 ] as const;
@@ -128,8 +128,8 @@ export const baselineArtifacts = [
     kind: localized('Pre-project application source', 'Cod al aplicației anterior proiectului'),
     title: localized('CerviGuard source before TealGuard implementation', 'Cod CerviGuard anterior implementării TealGuard'),
     description: localized(
-      'This revision was authored on 11 May 2026. It establishes that application code and core workflow surfaces predate TealGuard, but it predates the current owner/admin case-access controls and is not security evidence.',
-      'Această revizie a fost creată la 11 mai 2026. Ea confirmă că aplicația și fluxurile de bază precedă TealGuard, dar este anterioară controalelor actuale de acces la cazuri pentru proprietar și administrator și nu reprezintă o dovadă de securitate.'
+      'Authored on 11 May 2026, this revision contains the application and core workflow before TealGuard began. It predates the current owner/admin case-access controls and should not be used to assess current security controls.',
+      'Creată la 11 mai 2026, această revizie conține aplicația și fluxurile de bază anterioare începerii TealGuard. Ea precedă controalele actuale de acces la cazuri pentru proprietar și administrator și nu trebuie utilizată pentru evaluarea controalelor de securitate actuale.'
     ),
     href: cerviGuardRelease.historicalSourceUrl,
     identifier: cerviGuardRelease.historicalRevision,
@@ -139,10 +139,10 @@ export const baselineArtifacts = [
   {
     id: 'application-source',
     kind: localized('Current application source', 'Codul actual al aplicației'),
-    title: localized('CerviGuard v0.4.11 hardened revision', 'Revizia consolidată CerviGuard v0.4.11'),
+    title: localized('CerviGuard v0.4.11 source', 'Codul CerviGuard v0.4.11'),
     description: localized(
-      'Pinned source for the current workflow and focused owner/admin access-control tests. This post-start revision must not be mistaken for the application state on 19 August 2026.',
-      'Cod fixat pentru fluxul actual și testele focalizate ale controalelor de acces pentru proprietar și administrator. Această revizie ulterioară începerii proiectului nu trebuie confundată cu starea aplicației din 19 august 2026.'
+      'This pinned revision contains the current workflow and focused owner/admin access-control tests. Released after 19 August 2026, it does not represent CerviGuard\'s state when TealGuard began.',
+      'Această revizie fixată conține fluxul actual și testele focalizate ale controalelor de acces pentru proprietar și administrator. Publicată după 19 august 2026, ea nu reprezintă starea CerviGuard la începutul TealGuard.'
     ),
     href: cerviGuardRelease.sourceUrl,
     identifier: cerviGuardRelease.sourceRevision,
@@ -152,13 +152,13 @@ export const baselineArtifacts = [
   {
     id: 'live-surface',
     kind: localized('Live surface', 'Interfață publică'),
-    title: localized('CerviGuard sign-in surface', 'Interfața de autentificare CerviGuard'),
+    title: localized('CerviGuard sign-in', 'Autentificare CerviGuard'),
     description: localized(
-      'Version 0.4.11 was observed at the public URL on 28 August 2026 at 11:22 UTC. The URL is mutable and is not a cryptographic link to the source revision.',
-      'Versiunea 0.4.11 a fost observată la adresa publică la 28 august 2026, ora 11:22 UTC. Adresa este schimbătoare și nu reprezintă o legătură criptografică cu revizia sursă.'
+      'CerviGuard v0.4.11 was available at this public URL on 28 August 2026 at 11:22 UTC. The live application may change as new versions are released.',
+      'CerviGuard v0.4.11 era disponibil la această adresă publică la 28 august 2026, ora 11:22 UTC. Aplicația publică se poate schimba odată cu publicarea unor versiuni noi.'
     ),
     href: cerviGuardRelease.liveUrl,
-    identifier: 'Observed v0.4.11 · mutable',
+    identifier: 'CerviGuard v0.4.11 · 28 August 2026',
     action: localized('Open live surface', 'Deschideți interfața publică'),
     immutable: false
   },
@@ -167,8 +167,8 @@ export const baselineArtifacts = [
     kind: localized('Model-development source', 'Cod pentru dezvoltarea modelelor'),
     title: localized('CerviGuardModels source revision', 'Revizia sursă CerviGuardModels'),
     description: localized(
-      'Pinned public source for model-development workflows. It does not identify the weights used by a deployment or establish model performance.',
-      'Cod public fixat pentru fluxurile de dezvoltare a modelelor. Nu identifică ponderile utilizate de o implementare și nu stabilește performanța modelelor.'
+      'Pinned public source for model-development workflows. This repository does not identify deployment weights or report model performance.',
+      'Cod public fixat pentru fluxurile de dezvoltare a modelelor. Acest depozit nu identifică ponderile utilizate într-o implementare și nu raportează performanța modelelor.'
     ),
     href: 'https://github.com/SmartCloverAI/CerviGuardModels/tree/4d1a28c58f538c0d8045acb3c268c2f465b43677',
     identifier: '4d1a28c58f538c0d8045acb3c268c2f465b43677',
@@ -179,8 +179,8 @@ export const baselineArtifacts = [
 
 export const evidenceSupports = [
   localized('A public CerviGuard application revision that predates TealGuard implementation.', 'O revizie publică a aplicației CerviGuard anterioară implementării TealGuard.'),
-  localized('A current hardened application revision with focused access-control tests.', 'O revizie actuală consolidată a aplicației, cu teste focalizate ale controlului accesului.'),
-  localized('Synthetic intake and model-output review interfaces.', 'Interfețe sintetice pentru preluare și verificarea rezultatelor modelelor.'),
+  localized('A current CerviGuard revision with focused access-control tests.', 'O revizie actuală CerviGuard, cu teste focalizate ale controlului accesului.'),
+  localized('CerviGuard case-intake and model-output review screenshots.', 'Capturi de ecran CerviGuard pentru preluarea cazurilor și verificarea rezultatelor modelelor.'),
   localized('A dated, publicly reachable CerviGuard v0.4.11 sign-in surface.', 'O interfață publică de autentificare CerviGuard v0.4.11, observată la o dată precisă.'),
   localized('Pinned model-development source code.', 'Cod fixat pentru dezvoltarea modelelor.')
 ] as const;

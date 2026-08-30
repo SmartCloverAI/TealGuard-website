@@ -122,11 +122,11 @@ test('CerviGuard is presented as the audience-facing foundation without weakenin
   const home = await readFile('src/components/HomePage.tsx', 'utf8');
   const section = await readFile('src/components/SectionPage.tsx', 'utf8');
 
-  assert.match(home, /CerviGuard is SmartClover's working starting point for TealGuard/);
+  assert.match(home, /TealGuard builds on SmartClover's existing CerviGuard software/);
   assert.match(home, /structured case intake, image processing, role-controlled access, processing status and case history/);
   assert.match(section, /From CerviGuard to TealGuard/);
   assert.match(section, /four planned modules and shared interoperability, governance and deployment controls/);
-  assert.match(section, /does not establish clinical performance or final product readiness/);
+  assert.match(section, /do not report clinical performance or establish final product readiness/);
   assert.doesNotMatch(home, /A public CerviGuard revision from May 2026/);
   assert.doesNotMatch(section, /tealguard-platform-modules\.png/);
   assert.match(home, /\/images\/diagrams\/tealguard-deep-tech-architecture\.png/);
@@ -218,18 +218,19 @@ test('baseline evidence is pinned, bilingual and claim-bounded', async () => {
   }
 
   for (const bilingualFragment of [
-    'Dated interface evidence',
-    'Dovezi datate ale interfeței',
-    'This public record does not establish',
-    'Aceste dovezi publice nu stabilesc'
+    'CerviGuard screenshots',
+    'Capturi de ecran CerviGuard',
+    'What the public material does not show',
+    'Ce nu prezintă materialele publice'
   ]) assert.match(source, new RegExp(bilingualFragment));
 
   assert.match(source, /TRL6_CerviGuard\.docx/);
-  assert.match(source, /do not independently demonstrate operation in a relevant environment or validate the TRL assignment/);
+  assert.match(source, /do not independently validate operation in a relevant environment or the TRL assignment/);
   assert.match(source, /production-security assurance/);
-  assert.match(source, /post-start revision/);
+  assert.match(source, /Released after 19 August 2026/);
   assert.doesNotMatch(source, /existing CerviGuard TRL 6 prototype/);
   assert.doesNotMatch(source, /Reviewed synthetic evidence|Dovadă sintetică verificată/);
+  assert.doesNotMatch(source, /Publisher-produced capture|Synthetic capture|SmartClover synthetic capture|Local production build, evidence mode/);
   assert.doesNotMatch(source, /499e23c70431f795f589e6d1ad0f5da2fdceafd9|18a8e0b327ff2a003743facf0253df21dd97068f/);
   assert.doesNotMatch(source, /\/(?:main|latest)(?:['"/]|$)/);
   assert.equal(manifest.timeline.preProjectSource.revision, '20a03dd2fd5a454f6f7cb3fe3b857f3199b96cef');

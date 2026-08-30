@@ -41,9 +41,9 @@ test('homepage exposes the project identity, status and progressive scene', asyn
   await expect(page.locator('.scene-narrative').getByText('TealGuard next', { exact: true })).toBeVisible();
   await expect(page.locator('.scene-narrative').getByText('Four planned modules', { exact: true })).toBeVisible();
   await expect(page.getByText('Planned module', { exact: true })).toHaveCount(4);
-  await expect(page.getByRole('link', { name: 'Inspect the CerviGuard evidence' })).toHaveAttribute('href', '/en/baseline');
+  await expect(page.getByRole('link', { name: 'Explore CerviGuard' })).toHaveAttribute('href', '/en/baseline');
   await expect(page.getByRole('heading', { level: 2, name: 'TealGuard builds on CerviGuard' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Review the technology evidence' })).toHaveAttribute('href', '/en/baseline');
+  await expect(page.getByRole('link', { name: 'View CerviGuard screenshots and source' })).toHaveAttribute('href', '/en/baseline');
   await expect(page.getByText('Structured case intake', { exact: true })).toBeVisible();
   await expect(page.getByText('Role-controlled access', { exact: true })).toBeVisible();
   await expect(page.getByText('Case history', { exact: true })).toBeVisible();
@@ -168,11 +168,11 @@ test('baseline routes expose bilingual, pinned and bounded evidence', async ({ p
     await expect(page.locator('.evidence-record')).toHaveCount(2);
     await expect(page.locator('.evidence-record img')).toHaveCount(2);
     await expect(page.locator('.evidence-quick-links a')).toHaveCount(4);
-    await expect(page.locator('.evidence-record img').first()).toHaveAttribute('alt', /synthetic|sintetic/i);
+    await expect(page.locator('.evidence-record img').first()).toHaveAttribute('alt', /CerviGuard v0\.4\.11/i);
     await expect(page.locator('code').filter({ hasText: '20a03dd2fd5a454f6f7cb3fe3b857f3199b96cef' })).toBeVisible();
     await expect(page.locator('code').filter({ hasText: '8274b00929c5072438354502ee7ad454dd62a8da' })).toBeVisible();
     await expect(page.getByText('TRL6_CerviGuard.docx')).toBeVisible();
-    await expect(page.getByText(locale === 'ro' ? 'Aceste dovezi publice nu stabilesc' : 'This public record does not establish')).toBeVisible();
+    await expect(page.getByText(locale === 'ro' ? 'Ce nu prezintă materialele publice' : 'What the public material does not show')).toBeVisible();
     await expect(page.getByText(/relevant environment|mediu relevant/i).last()).toBeVisible();
     await expect(page.getByRole('link', { name: /machine-readable evidence manifest|manifestul de dovezi/i })).toHaveAttribute('href', '/evidence/cerviguard-baseline-manifest_v1.json');
 
@@ -242,7 +242,7 @@ test('metadata, canonical routes and runtime probes are consistent', async ({ pa
   const version = await request.get('/api/version');
   expect(version.status()).toBe(200);
   const versionBody = await version.json();
-  expect(versionBody.version).toBe('1.0.7');
+  expect(versionBody.version).toBe('1.0.8');
   expect(versionBody.revision).toMatch(/^[0-9a-f]{7,40}$/);
   expect(Number.isNaN(Date.parse(versionBody.builtAt))).toBe(false);
 
@@ -382,9 +382,9 @@ test('core project content survives without JavaScript', async ({ browser }) => 
   await expect(page.getByRole('heading', { level: 2, name: 'TealGuard builds on CerviGuard' })).toBeVisible();
   await expect(page.locator('.scene-fallback')).toBeVisible();
   await page.goto('/en/baseline');
-  await expect(page.getByRole('heading', { level: 1, name: 'CerviGuard evidence for TealGuard' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'CerviGuard, the software foundation for TealGuard' })).toBeVisible();
   await expect(page.locator('.evidence-record')).toHaveCount(2);
-  await expect(page.getByText('This public record does not establish')).toBeVisible();
+  await expect(page.getByText('What the public material does not show')).toBeVisible();
   await expect(page.getByRole('link', { name: /Open the machine-readable evidence manifest/ })).toBeVisible();
   await context.close();
 });

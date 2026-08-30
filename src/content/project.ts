@@ -50,7 +50,7 @@ export const navigation: Array<{ slug: SectionSlug; label: LocalizedText; group:
   { slug: 'validation', label: localized('Validation', 'Validare'), group: 'primary' },
   { slug: 'progress', label: localized('Progress', 'Progres'), group: 'primary' },
   { slug: 'news', label: localized('News', 'Noutăți'), group: 'primary' },
-  { slug: 'baseline', label: localized('Technology evidence', 'Dovezi tehnologice'), group: 'evidence' },
+  { slug: 'baseline', label: localized('CerviGuard', 'CerviGuard'), group: 'evidence' },
   { slug: 'outputs', label: localized('Outputs', 'Rezultate'), group: 'evidence' },
   { slug: 'consortium', label: localized('Consortium', 'Consorțiu'), group: 'evidence' },
   { slug: 'funding', label: localized('Funding', 'Finanțare'), group: 'evidence' },
@@ -97,8 +97,8 @@ export const homeCopy = {
   ),
   evidenceHeading: localized('Follow TealGuard from contract to clinical validation.', 'Parcursul TealGuard, de la contract la validare clinică.'),
   evidenceBody: localized(
-    'We publish completed milestones with their date and supporting public record.',
-    'Publicăm etapele finalizate împreună cu data și dovada publică aferentă.'
+    'Each completed milestone includes its date and a link to the corresponding public update or output.',
+    'Fiecare etapă finalizată include data și o legătură către actualizarea sau rezultatul public corespunzător.'
   )
 };
 
@@ -208,11 +208,11 @@ export const sectionCopy: Record<SectionSlug, { eyebrow: LocalizedText; title: L
     introduction: localized('No clinical-performance or patient-outcome results are claimed today. Every validation figure below is a project target.', 'În prezent, proiectul nu revendică rezultate privind performanța clinică sau efectele asupra pacientelor. Fiecare cifră de validare de mai jos este un obiectiv al proiectului.')
   },
   baseline: {
-    eyebrow: localized('Technology evidence', 'Dovezi tehnologice'),
-    title: localized('CerviGuard evidence for TealGuard', 'Dovezi CerviGuard pentru TealGuard'),
+    eyebrow: localized('CerviGuard today', 'CerviGuard astăzi'),
+    title: localized('CerviGuard, the software foundation for TealGuard', 'CerviGuard, fundația software pentru TealGuard'),
     introduction: localized(
-      'Inspect the CerviGuard application code available before TealGuard, the current hardened release, dated synthetic captures and the precise limits of this public evidence.',
-      'Consultați codul aplicației CerviGuard disponibil înaintea TealGuard, versiunea actuală consolidată, capturile sintetice datate și limitele precise ale acestor dovezi publice.'
+      'Explore CerviGuard as TealGuard\'s starting point through the application source, v0.4.11 screenshots, the live application and model-development code.',
+      'Descoperiți CerviGuard ca punct de plecare pentru TealGuard prin codul aplicației, capturile de ecran v0.4.11, aplicația publică și codul pentru dezvoltarea modelelor.'
     )
   },
   progress: {

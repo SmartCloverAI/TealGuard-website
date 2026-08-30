@@ -23,7 +23,7 @@ export function BaselineEvidence({ locale }: { locale: Locale }) {
     <div className="baseline-evidence">
       <section className="baseline-scope" aria-labelledby="baseline-scope-heading">
         <div className="section-heading section-heading--wide">
-          <p className="eyebrow">{ro ? 'Cronologia dovezilor' : 'Evidence timeline'}</p>
+          <p className="eyebrow">{ro ? 'CerviGuard astăzi' : 'CerviGuard today'}</p>
           <h2 id="baseline-scope-heading">{baselineText(baselineCopy.scopeHeading, locale)}</h2>
           <p>{baselineText(baselineCopy.scopeIntroduction, locale)}</p>
         </div>
@@ -38,7 +38,7 @@ export function BaselineEvidence({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <nav className="evidence-quick-links" aria-label={ro ? 'Legături rapide pentru verificare' : 'Quick verification links'}>
+      <nav className="evidence-quick-links" aria-label={ro ? 'Legături CerviGuard' : 'CerviGuard links'}>
         <a href={cerviGuardRelease.historicalSourceUrl} target="_blank" rel="noreferrer">
           <Code2 aria-hidden="true" size={17} />
           <span>{ro ? 'Cod anterior proiectului' : 'Pre-project source'}<span className="sr-only">{newTabNote}</span></span>
@@ -46,11 +46,11 @@ export function BaselineEvidence({ locale }: { locale: Locale }) {
         </a>
         <a href={cerviGuardRelease.sourceUrl} target="_blank" rel="noreferrer">
           <Code2 aria-hidden="true" size={17} />
-          <span>{ro ? 'Cod actual consolidat' : 'Current hardened source'}<span className="sr-only">{newTabNote}</span></span>
+          <span>{ro ? 'Cod CerviGuard actual' : 'Current CerviGuard source'}<span className="sr-only">{newTabNote}</span></span>
           <ExternalLink aria-hidden="true" size={14} />
         </a>
         <a href={cerviGuardRelease.liveUrl} target="_blank" rel="noreferrer">
-          <span>{ro ? 'Interfață publică observată' : 'Observed live surface'}<span className="sr-only">{newTabNote}</span></span>
+          <span>{ro ? 'Autentificare CerviGuard' : 'CerviGuard sign-in'}<span className="sr-only">{newTabNote}</span></span>
           <ExternalLink aria-hidden="true" size={14} />
         </a>
         <a href={cerviGuardRelease.manifestUrl}>
@@ -61,7 +61,7 @@ export function BaselineEvidence({ locale }: { locale: Locale }) {
 
       <section className="baseline-captures" aria-labelledby="baseline-captures-heading">
         <div className="section-heading section-heading--wide">
-          <p className="eyebrow">{ro ? 'Interfață verificabilă' : 'Inspectable interface'}</p>
+          <p className="eyebrow">{ro ? 'Ecrane de produs' : 'Product screens'}</p>
           <h2 id="baseline-captures-heading">{baselineText(baselineCopy.capturesHeading, locale)}</h2>
           <p>{baselineText(baselineCopy.capturesIntroduction, locale)}</p>
         </div>
@@ -75,7 +75,7 @@ export function BaselineEvidence({ locale }: { locale: Locale }) {
                 href={capture.src}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`${baselineText(capture.title, locale)} — ${ro ? 'deschideți captura la dimensiune completă într-o filă nouă' : 'open the full-size evidence capture in a new tab'}`}
+                aria-label={`${baselineText(capture.title, locale)}, ${ro ? 'deschideți captura de ecran la dimensiune completă într-o filă nouă' : 'open the full-size screenshot in a new tab'}`}
               >
                 <Image
                   src={capture.src}
@@ -86,23 +86,22 @@ export function BaselineEvidence({ locale }: { locale: Locale }) {
                   unoptimized
                 />
                 <span className="evidence-record__open">
-                  {ro ? 'Deschideți captura la dimensiune completă' : 'Open full-size evidence capture'}
+                  {ro ? 'Deschideți captura de ecran' : 'Open full-size screenshot'}
                   <ExternalLink aria-hidden="true" size={15} />
                 </span>
               </a>
               <figcaption>{baselineText(capture.caption, locale)}</figcaption>
             </figure>
 
-            <aside className="evidence-record__meta" aria-label={`${baselineText(capture.title, locale)} — ${ro ? 'proveniența capturii' : 'capture provenance'}`}>
-              <p className="evidence-status"><Hash aria-hidden="true" size={16} /> {ro ? 'Captură sintetică SmartClover · SHA-256' : 'SmartClover synthetic capture · SHA-256'}</p>
+            <aside className="evidence-record__meta" aria-label={`${baselineText(capture.title, locale)}, ${ro ? 'detalii despre captura de ecran' : 'screenshot details'}`}>
+              <p className="evidence-status"><Hash aria-hidden="true" size={16} /> {ro ? 'Captură de ecran CerviGuard · SHA-256' : 'CerviGuard screenshot · SHA-256'}</p>
               <p className="evidence-record__supports">
-                <strong>{ro ? 'Susține:' : 'Supports:'}</strong> {baselineText(capture.supports, locale)}
+                <strong>{ro ? 'Prezintă:' : 'Shows:'}</strong> {baselineText(capture.supports, locale)}
               </p>
               <dl className="provenance-list">
-                <div><dt>{ro ? 'Capturat' : 'Captured'}</dt><dd>{ro ? '28 august 2026' : '28 August 2026'}</dd></div>
+                <div><dt>{ro ? 'Data capturii' : 'Screenshot date'}</dt><dd>{ro ? '28 august 2026' : '28 August 2026'}</dd></div>
                 <div><dt>{ro ? 'Aplicație' : 'Application'}</dt><dd>CerviGuard v{cerviGuardRelease.version}</dd></div>
-                <div><dt>{ro ? 'Mediu' : 'Environment'}</dt><dd>{ro ? 'Versiune locală de producție, mod pentru dovezi' : 'Local production build, evidence mode'}</dd></div>
-                <div><dt>{ro ? 'Date' : 'Data'}</dt><dd>{ro ? 'Sintetice; nu pentru utilizare clinică' : 'Synthetic; not for clinical use'}</dd></div>
+                <div><dt>{ro ? 'Conținut' : 'Content'}</dt><dd>{ro ? 'Date demonstrative' : 'Demonstration data'}</dd></div>
                 <div><dt>{ro ? 'Fișier' : 'File'}</dt><dd>PNG · {capture.width} × {capture.height}</dd></div>
                 <div><dt>SHA-256</dt><dd><code>{capture.sha256}</code></dd></div>
               </dl>
@@ -112,7 +111,7 @@ export function BaselineEvidence({ locale }: { locale: Locale }) {
       </section>
 
       <section className="evidence-boundary" aria-labelledby="evidence-boundary-heading">
-        <h2 id="evidence-boundary-heading">{ro ? 'Limita dovezilor' : 'Evidence boundary'}</h2>
+        <h2 id="evidence-boundary-heading">{ro ? 'Informații publice actuale' : 'Current public information'}</h2>
         <div className="evidence-boundary__grid">
           <div>
             <h3><ShieldCheck aria-hidden="true" size={19} /> {baselineText(baselineCopy.supportsHeading, locale)}</h3>
@@ -127,7 +126,7 @@ export function BaselineEvidence({ locale }: { locale: Locale }) {
 
       <section className="evidence-inventory" aria-labelledby="evidence-inventory-heading">
         <div className="section-heading section-heading--wide">
-          <p className="eyebrow">{ro ? 'Surse fixate' : 'Pinned sources'}</p>
+          <p className="eyebrow">{ro ? 'Surse publice' : 'Source links'}</p>
           <h2 id="evidence-inventory-heading">{baselineText(baselineCopy.inventoryHeading, locale)}</h2>
           <p>{baselineText(baselineCopy.inventoryIntroduction, locale)}</p>
         </div>
@@ -152,7 +151,7 @@ export function BaselineEvidence({ locale }: { locale: Locale }) {
 
       <aside className="trl-boundary" aria-labelledby="trl-boundary-heading">
         <div>
-          <p className="eyebrow">{ro ? 'Contextul maturității' : 'Maturity context'}</p>
+          <p className="eyebrow">{ro ? 'Stadiu de dezvoltare' : 'Development stage'}</p>
           <h2 id="trl-boundary-heading">{baselineText(baselineCopy.trlHeading, locale)}</h2>
           <p>{baselineText(baselineCopy.trlBody, locale)}</p>
         </div>

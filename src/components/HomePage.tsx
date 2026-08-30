@@ -78,7 +78,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             </div>
             <p className="consortium-line">{text(homeCopy.consortium, locale)}</p>
             <Link className="hero-evidence-link" href={`/${locale}/baseline`}>
-              {locale === 'ro' ? 'Consultați dovezile CerviGuard' : 'Inspect the CerviGuard evidence'}
+              {locale === 'ro' ? 'Descoperiți CerviGuard' : 'Explore CerviGuard'}
               <ArrowRight aria-hidden="true" size={15} />
             </Link>
           </div>
@@ -91,7 +91,7 @@ export function HomePage({ locale }: { locale: Locale }) {
           <p>{text(homeCopy.introduction, locale)}</p>
           <p>{text(homeCopy.consortium, locale)}</p>
           <Link className="mobile-hero-context__evidence" href={`/${locale}/baseline`}>
-            {locale === 'ro' ? 'Consultați dovezile CerviGuard' : 'Inspect the CerviGuard evidence'}
+            {locale === 'ro' ? 'Descoperiți CerviGuard' : 'Explore CerviGuard'}
             <ArrowRight aria-hidden="true" size={14} />
           </Link>
         </div>
@@ -120,14 +120,14 @@ export function HomePage({ locale }: { locale: Locale }) {
       <section className="baseline-proof" aria-labelledby="baseline-proof-heading">
         <div className="shell baseline-proof__grid">
           <div className="baseline-proof__copy">
-            <p className="eyebrow">{locale === 'ro' ? 'Dovezi tehnologice' : 'Technology evidence'}</p>
+            <p className="eyebrow">{locale === 'ro' ? 'CerviGuard astăzi' : 'CerviGuard today'}</p>
             <h2 id="baseline-proof-heading">
               {locale === 'ro' ? 'TealGuard se bazează pe CerviGuard' : 'TealGuard builds on CerviGuard'}
             </h2>
             <p>
               {locale === 'ro'
-                ? 'CerviGuard este punctul de plecare funcțional al SmartClover pentru TealGuard. Fluxul existent reunește preluarea structurată a cazurilor, procesarea imaginilor, accesul controlat pe roluri, starea procesării și istoricul cazului. TealGuard va extinde și valida această fundație prin patru module planificate.'
-                : "CerviGuard is SmartClover's working starting point for TealGuard. Its existing workflow brings together structured case intake, image processing, role-controlled access, processing status and case history. TealGuard will extend and validate that foundation through four planned modules."}
+                ? 'TealGuard se bazează pe software-ul CerviGuard existent, dezvoltat de SmartClover. Fluxul său funcțional de screening reunește preluarea structurată a cazurilor, procesarea imaginilor, accesul controlat pe roluri, starea procesării și istoricul cazului. Programul va extinde și valida această fundație prin patru module planificate.'
+                : "TealGuard builds on SmartClover's existing CerviGuard software. Its working screening workflow brings together structured case intake, image processing, role-controlled access, processing status and case history. The programme will extend and validate this foundation through four planned modules."}
             </p>
             <div className="baseline-proof__meta">
               <span>CerviGuard v{cerviGuardRelease.version}</span>
@@ -136,11 +136,11 @@ export function HomePage({ locale }: { locale: Locale }) {
               <span>{locale === 'ro' ? 'Istoricul cazului' : 'Case history'}</span>
             </div>
             <Link className="button button--dark baseline-proof__action" href={`/${locale}/baseline`}>
-              {locale === 'ro' ? 'Consultați dovezile tehnologice' : 'Review the technology evidence'}
+              {locale === 'ro' ? 'Vedeți capturile și codul CerviGuard' : 'View CerviGuard screenshots and source'}
               <ArrowRight aria-hidden="true" size={16} />
             </Link>
           </div>
-          <Link className="baseline-proof__media" href={`/${locale}/baseline`} aria-label={locale === 'ro' ? 'Consultați captura și dovezile CerviGuard' : 'Review the CerviGuard capture and evidence'}>
+          <Link className="baseline-proof__media" href={`/${locale}/baseline`} aria-label={locale === 'ro' ? 'Deschideți captura de ecran CerviGuard' : 'Open the CerviGuard screenshot'}>
             <Image
               src={baselineCaptures[0].src}
               alt={baselineText(baselineCaptures[0].alt, locale)}
@@ -149,7 +149,7 @@ export function HomePage({ locale }: { locale: Locale }) {
               sizes="(max-width: 800px) 100vw, 42vw"
               unoptimized
             />
-            <span>{locale === 'ro' ? 'Captură sintetică · 28 august 2026' : 'Synthetic capture · 28 August 2026'}</span>
+            <span>{locale === 'ro' ? 'Captură de ecran CerviGuard v0.4.11' : 'CerviGuard v0.4.11 screenshot'}</span>
           </Link>
         </div>
       </section>
